@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html lang="pl" data-theme="dark">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -12,7 +12,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
-  <!-- Calendly widget CSS -->
+  <!-- Calendly CSS -->
   <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
 
   <!-- Tailwind CDN -->
@@ -21,15 +21,6 @@
     tailwind.config = {
       theme: {
         extend: {
-          colors: {
-            bg:             '#080E1C',
-            surface:        '#0F172A',
-            accent:         '#3B82F6',
-            'accent-hover': '#2563EB',
-            'accent-light': '#60A5FA',
-            text:           '#F1F5F9',
-            muted:          '#64748B',
-          },
           fontFamily: {
             heading: ['Space Grotesk', 'sans-serif'],
             body:    ['DM Sans', 'sans-serif'],
@@ -39,68 +30,143 @@
     }
   </script>
 
+  <!-- Prevent theme flash -->
+  <script>(function(){var t=localStorage.getItem('theme')||'dark';document.documentElement.setAttribute('data-theme',t);})();</script>
+
   <style>
-    /* ── Base ─────────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       CSS VARIABLES — DARK (default) + LIGHT
+    ══════════════════════════════════════════════════════════ */
+    :root, [data-theme="dark"] {
+      --bg:          #080E1C;
+      --surface:     #0F172A;
+      --surface-2:   #111827;
+      --border:      rgba(255,255,255,0.07);
+      --text:        #F1F5F9;
+      --muted:       #64748B;
+      --accent:      #3B82F6;
+      --accent-h:    #2563EB;
+      --accent-bg:   rgba(59,130,246,0.10);
+      --accent-bdr:  rgba(59,130,246,0.22);
+      --dot:         rgba(255,255,255,0.042);
+      --nav-bg:      rgba(8,14,28,0.88);
+      --card-shadow: none;
+      --glow-a:      rgba(59,130,246,0.13);
+      --glow-b:      rgba(99,102,241,0.12);
+      --toggle-bg:   rgba(255,255,255,0.07);
+      --cmp-no-bg:   rgba(239,68,68,0.10);
+      --cmp-no-bdr:  rgba(239,68,68,0.18);
+      --cmp-yes-bg:  rgba(34,197,94,0.10);
+      --cmp-yes-bdr: rgba(34,197,94,0.22);
+      --proof-bg:    rgba(255,255,255,0.025);
+    }
+    [data-theme="light"] {
+      --bg:          #EEF2FF;
+      --surface:     #FFFFFF;
+      --surface-2:   #F5F7FF;
+      --border:      rgba(15,23,42,0.09);
+      --text:        #0F172A;
+      --muted:       #475569;
+      --accent:      #2563EB;
+      --accent-h:    #1D4ED8;
+      --accent-bg:   rgba(37,99,235,0.08);
+      --accent-bdr:  rgba(37,99,235,0.22);
+      --dot:         rgba(37,99,235,0.05);
+      --nav-bg:      rgba(238,242,255,0.92);
+      --card-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 4px 20px rgba(0,0,0,0.05);
+      --glow-a:      rgba(59,130,246,0.07);
+      --glow-b:      rgba(99,102,241,0.06);
+      --toggle-bg:   rgba(15,23,42,0.06);
+      --cmp-no-bg:   rgba(239,68,68,0.06);
+      --cmp-no-bdr:  rgba(239,68,68,0.14);
+      --cmp-yes-bg:  rgba(34,197,94,0.06);
+      --cmp-yes-bdr: rgba(34,197,94,0.18);
+      --proof-bg:    rgba(15,23,42,0.03);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       BASE
+    ══════════════════════════════════════════════════════════ */
     html { scroll-behavior: smooth; }
-    body { background-color: #080E1C; color: #F1F5F9; font-family: 'DM Sans', sans-serif; }
+    body {
+      background: var(--bg); color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      transition: background .3s, color .3s;
+    }
     h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
 
-    /* ── Dot grid ─────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       LAYOUT HELPERS
+    ══════════════════════════════════════════════════════════ */
     .dot-grid {
-      background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-image: radial-gradient(var(--dot) 1px, transparent 1px);
       background-size: 28px 28px;
     }
+    .section-surface  { background: var(--surface); }
+    .section-surface2 { background: var(--surface-2); }
+    .section-divider  {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border), transparent);
+    }
 
-    /* ── Glow blobs ───────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       GLOW BLOBS
+    ══════════════════════════════════════════════════════════ */
     .glow-blob {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(140px);
-      pointer-events: none;
+      position: absolute; border-radius: 50%;
+      filter: blur(140px); pointer-events: none;
     }
     @keyframes blob-float {
-      0%, 100% { transform: translate(0, 0) scale(1); }
-      33%       { transform: translate(28px, -18px) scale(1.05); }
-      66%       { transform: translate(-18px, 14px) scale(0.95); }
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(28px,-18px) scale(1.05); }
+      66%      { transform: translate(-18px,14px) scale(0.95); }
     }
     .blob-a { animation: blob-float 14s ease-in-out infinite; }
     .blob-b { animation: blob-float 18s ease-in-out infinite reverse; }
 
-    /* ── Navbar ───────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       NAVBAR
+    ══════════════════════════════════════════════════════════ */
     .glass-nav {
-      background: rgba(8, 14, 28, 0.85);
+      background: var(--nav-bg);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid var(--border);
+      transition: background .3s, border-color .3s;
     }
 
-    /* ── Cards ────────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       CARDS
+    ══════════════════════════════════════════════════════════ */
     .card {
-      background: #0F172A;
-      border: 1px solid rgba(255,255,255,0.07);
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 12px;
+      box-shadow: var(--card-shadow);
       transition: border-color .25s, transform .25s, box-shadow .25s;
     }
     .card:hover {
-      border-color: rgba(59,130,246,0.35);
+      border-color: var(--accent-bdr);
       transform: translateY(-3px);
-      box-shadow: 0 8px 32px rgba(59,130,246,0.08);
+      box-shadow: 0 8px 32px var(--accent-bg);
     }
 
-    /* ── Icon box ─────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       ICON BOX
+    ══════════════════════════════════════════════════════════ */
     .icon-box {
-      width: 44px; height: 44px;
-      border-radius: 10px;
-      background: rgba(59,130,246,0.1);
-      border: 1px solid rgba(59,130,246,0.18);
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--accent-bg); border: 1px solid var(--accent-bdr);
       display: flex; align-items: center; justify-content: center;
       flex-shrink: 0;
     }
 
-    /* ── Buttons ──────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       BUTTONS
+    ══════════════════════════════════════════════════════════ */
     .btn-primary {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: #3B82F6; color: #fff;
+      background: var(--accent); color: #fff;
       font-family: 'Space Grotesk', sans-serif; font-weight: 600;
       padding: .875rem 1.75rem; border-radius: 8px;
       transition: background .2s, transform .15s, box-shadow .2s;
@@ -108,95 +174,187 @@
       white-space: nowrap;
     }
     .btn-primary:hover {
-      background: #2563EB; transform: translateY(-1px);
-      box-shadow: 0 4px 20px rgba(59,130,246,.35);
+      background: var(--accent-h); transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(59,130,246,.38);
     }
     .btn-primary:active { transform: translateY(0); }
 
     .btn-ghost {
       display: inline-flex; align-items: center; gap: .5rem;
-      background: transparent; color: #F1F5F9;
+      background: transparent; color: var(--text);
       font-family: 'Space Grotesk', sans-serif; font-weight: 500;
       padding: .875rem 1.5rem; border-radius: 8px;
-      border: 1px solid rgba(255,255,255,0.12);
-      transition: border-color .2s, background .2s;
+      border: 1px solid var(--border);
+      transition: border-color .2s, background .2s, color .2s;
       cursor: pointer; text-decoration: none; white-space: nowrap;
     }
-    .btn-ghost:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.04); }
+    .btn-ghost:hover { border-color: var(--accent-bdr); background: var(--accent-bg); }
 
-    /* ── Eyebrow ──────────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       TYPOGRAPHY COMPONENTS
+    ══════════════════════════════════════════════════════════ */
     .eyebrow {
       display: inline-flex; align-items: center; gap: .4rem;
-      font-size: .75rem; font-weight: 600;
-      letter-spacing: .07em; text-transform: uppercase;
-      color: #3B82F6;
-      background: rgba(59,130,246,.08);
-      border: 1px solid rgba(59,130,246,.2);
+      font-size: .74rem; font-weight: 600; letter-spacing: .07em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-bg); border: 1px solid var(--accent-bdr);
       border-radius: 999px; padding: .3rem 1rem;
     }
-
-    /* ── Gradient text ────────────────────────────────────── */
     .gradient-text {
       background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #818CF8 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
-
-    /* ── Service tag ──────────────────────────────────────── */
-    .service-tag {
-      font-size: .68rem; font-weight: 700;
-      letter-spacing: .06em; text-transform: uppercase;
-      color: #60A5FA;
-      background: rgba(59,130,246,.1);
-      border-radius: 4px; padding: .2rem .55rem;
+    [data-theme="light"] .gradient-text {
+      background: linear-gradient(135deg, #1D4ED8 0%, #2563EB 60%, #4F46E5 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
-
-    /* ── Stat number ──────────────────────────────────────── */
+    .service-tag {
+      font-size: .67rem; font-weight: 700; letter-spacing: .06em;
+      text-transform: uppercase; color: var(--accent);
+      background: var(--accent-bg); border-radius: 4px;
+      padding: .2rem .55rem;
+    }
     .stat-num {
       font-family: 'Space Grotesk', sans-serif;
-      font-weight: 700; line-height: 1; color: #3B82F6;
+      font-weight: 700; line-height: 1; color: var(--accent);
     }
-
-    /* ── Step number ──────────────────────────────────────── */
     .step-num {
       font-family: 'Space Grotesk', sans-serif;
-      font-size: .7rem; font-weight: 700;
-      color: #3B82F6; letter-spacing: .08em;
+      font-size: .7rem; font-weight: 700; color: var(--accent);
+      letter-spacing: .08em;
+    }
+    .text-c-muted  { color: var(--muted); }
+    .text-c-text   { color: var(--text); }
+    .text-c-accent { color: var(--accent); }
+
+    /* ══════════════════════════════════════════════════════════
+       PROOF BAR
+    ══════════════════════════════════════════════════════════ */
+    .proof-bar {
+      background: var(--proof-bg);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .proof-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; font-size: 2.2rem; line-height: 1;
+      color: var(--accent);
     }
 
-    /* ── Section divider ──────────────────────────────────── */
-    .section-divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(255,255,255,.07), transparent);
+    /* ══════════════════════════════════════════════════════════
+       FUNNEL
+    ══════════════════════════════════════════════════════════ */
+    .funnel-svg polygon {
+      transition: filter .22s, opacity .22s;
+      cursor: pointer;
+    }
+    .funnel-svg polygon:hover { filter: brightness(1.15); }
+    .funnel-stage-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      transition: border-color .22s, box-shadow .22s, background .22s;
+      cursor: default;
+    }
+    .funnel-stage-card.active {
+      border-color: var(--accent-bdr);
+      box-shadow: 0 0 0 3px var(--accent-bg);
+    }
+    .funnel-stage-card .stage-dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
     }
 
-    /* ── Scroll indicator ─────────────────────────────────── */
-    @keyframes scroll-bounce {
-      0%, 100% { transform: translateY(0); opacity: .7; }
-      50%       { transform: translateY(7px); opacity: .25; }
+    /* ══════════════════════════════════════════════════════════
+       COMPARISON
+    ══════════════════════════════════════════════════════════ */
+    .cmp-col {
+      border-radius: 14px; padding: 2rem;
     }
-    .scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+    .cmp-col-no  { background: var(--cmp-no-bg);  border: 1px solid var(--cmp-no-bdr); }
+    .cmp-col-yes { background: var(--cmp-yes-bg); border: 1px solid var(--cmp-yes-bdr); }
+    .cmp-item {
+      display: flex; align-items: flex-start; gap: .75rem;
+      padding: .75rem 0; border-bottom: 1px solid var(--border);
+      font-size: .9rem; line-height: 1.5;
+    }
+    .cmp-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .cmp-icon {
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: .75rem; font-weight: 700; flex-shrink: 0; margin-top: .1rem;
+    }
+    .cmp-icon-no  { background: rgba(239,68,68,.18);  color: #EF4444; }
+    .cmp-icon-yes { background: rgba(34,197,94,.18);  color: #22C55E; }
 
-    /* ── Mobile menu ──────────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       THEME TOGGLE
+    ══════════════════════════════════════════════════════════ */
+    .theme-toggle {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--toggle-bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; transition: background .2s, border-color .2s;
+    }
+    .theme-toggle:hover { background: var(--accent-bg); border-color: var(--accent-bdr); }
+    .icon-sun  { display: none; }
+    .icon-moon { display: block; }
+    [data-theme="light"] .icon-sun  { display: block; }
+    [data-theme="light"] .icon-moon { display: none; }
+
+    /* ══════════════════════════════════════════════════════════
+       SVG DASHBOARD (CSS classes for theme support)
+    ══════════════════════════════════════════════════════════ */
+    .dash-card { fill: var(--surface); stroke: var(--border); }
+    .dash-inner { fill: var(--bg); }
+    .dash-text  { fill: var(--text); }
+    .dash-muted { fill: var(--muted); }
+    .dash-accent { fill: var(--accent); }
+    .dash-grid  { stroke: var(--border); }
+
+    /* ══════════════════════════════════════════════════════════
+       PHOTO SECTION
+    ══════════════════════════════════════════════════════════ */
+    .photo-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, var(--bg) 35%, transparent 70%);
+    }
+
+    /* ══════════════════════════════════════════════════════════
+       MOBILE MENU
+    ══════════════════════════════════════════════════════════ */
     #mobile-menu { display: none; }
     #mobile-menu.open { display: flex; }
 
-    /* ── Scroll animations ────────────────────────────────── */
+    /* ══════════════════════════════════════════════════════════
+       SCROLL ANIMATIONS
+    ══════════════════════════════════════════════════════════ */
     .fade-up {
-      opacity: 0;
-      transform: translateY(26px);
+      opacity: 0; transform: translateY(26px);
       transition: opacity .65s ease, transform .65s ease;
     }
     .fade-up.visible { opacity: 1; transform: translateY(0); }
-    .fade-up.d1 { transition-delay: .1s; }
-    .fade-up.d2 { transition-delay: .2s; }
-    .fade-up.d3 { transition-delay: .3s; }
-    .fade-up.d4 { transition-delay: .4s; }
+    .fade-up.d1 { transition-delay: .10s; }
+    .fade-up.d2 { transition-delay: .20s; }
+    .fade-up.d3 { transition-delay: .30s; }
+    .fade-up.d4 { transition-delay: .40s; }
 
-    /* ── Reduce motion ────────────────────────────────────── */
+    /* Scroll indicator */
+    @keyframes scroll-bounce {
+      0%,100% { transform: translateY(0); opacity: .7; }
+      50%      { transform: translateY(7px); opacity: .25; }
+    }
+    .scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+
+    /* ══════════════════════════════════════════════════════════
+       REDUCE MOTION
+    ══════════════════════════════════════════════════════════ */
     @media (prefers-reduced-motion: reduce) {
-      .card, .btn-primary, .btn-ghost { transition: none; }
-      .fade-up { opacity: 1; transform: none; transition: none; }
+      .card, .btn-primary, .btn-ghost, body, .funnel-svg polygon,
+      .funnel-stage-card { transition: none !important; }
+      .fade-up { opacity: 1; transform: none; transition: none !important; }
       .blob-a, .blob-b { animation: none; }
       .scroll-indicator { animation: none; }
       html { scroll-behavior: auto; }
@@ -206,516 +364,857 @@
 
 <body class="antialiased">
 
-  <!-- ═══════════════════════════════════════════════════════ NAVBAR -->
-  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
-    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+<!-- ═══════════════════════════════════════════════════════════ NAVBAR -->
+<header class="glass-nav fixed top-0 left-0 right-0 z-50">
+  <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
-      <a href="#" class="font-heading font-bold text-xl text-text tracking-tight">[DOMAIN]</a>
+    <a href="#" class="font-heading font-bold text-xl tracking-tight text-c-text">[DOMAIN]</a>
 
-      <!-- Desktop nav -->
-      <nav class="hidden md:flex items-center gap-8" aria-label="Nawigacja">
-        <a href="#uslugi" class="text-muted text-sm font-medium hover:text-text transition-colors">Usługi</a>
-        <a href="#proces" class="text-muted text-sm font-medium hover:text-text transition-colors">Jak działamy</a>
-        <a href="#wyniki" class="text-muted text-sm font-medium hover:text-text transition-colors">Wyniki</a>
-      </nav>
+    <nav class="hidden md:flex items-center gap-8" aria-label="Nawigacja">
+      <a href="#uslugi" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Usługi</a>
+      <a href="#lejek"  class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Lejek</a>
+      <a href="#proces" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Jak działamy</a>
+      <a href="#wyniki" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Wyniki</a>
+    </nav>
 
-      <div class="flex items-center gap-3">
-        <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-5">
-          Umów konsultację
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <rect x="3" y="4" width="18" height="18" rx="2"/>
-            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-          </svg>
-        </button>
+    <div class="flex items-center gap-2">
+      <!-- Theme toggle -->
+      <button id="themeToggle" class="theme-toggle" aria-label="Przełącz motyw">
+        <svg class="icon-moon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             style="color:var(--muted)" aria-hidden="true">
+          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+        </svg>
+        <svg class="icon-sun" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24"
+             fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+             style="color:var(--muted)" aria-hidden="true">
+          <circle cx="12" cy="12" r="5"/>
+          <line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+          <line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+        </svg>
+      </button>
 
-        <button id="hamburger" class="md:hidden p-2 text-muted hover:text-text transition-colors"
-                aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
-          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-
-    <!-- Mobile menu -->
-    <div id="mobile-menu" class="flex-col border-t border-[rgba(255,255,255,0.07)] px-6 py-5 gap-5 md:hidden">
-      <a href="#uslugi" class="text-text text-sm font-medium">Usługi</a>
-      <a href="#proces" class="text-text text-sm font-medium">Jak działamy</a>
-      <a href="#wyniki" class="text-text text-sm font-medium">Wyniki</a>
-      <button onclick="openCalendly(); document.getElementById('mobile-menu').classList.remove('open')"
-              class="btn-primary text-sm py-2.5 px-5 w-full justify-center">
+      <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-4 hidden md:inline-flex">
         Umów konsultację
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </button>
+
+      <button id="hamburger" class="md:hidden p-2 text-c-muted hover:text-c-text transition-colors"
+              aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+        <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
       </button>
     </div>
-  </header>
+  </div>
 
-  <main>
+  <!-- Mobile menu -->
+  <div id="mobile-menu" class="flex-col border-t px-6 py-5 gap-5 md:hidden"
+       style="border-color:var(--border);background:var(--nav-bg)">
+    <a href="#uslugi" class="text-sm font-medium text-c-text">Usługi</a>
+    <a href="#lejek"  class="text-sm font-medium text-c-text">Lejek</a>
+    <a href="#proces" class="text-sm font-medium text-c-text">Jak działamy</a>
+    <a href="#wyniki" class="text-sm font-medium text-c-text">Wyniki</a>
+    <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-4 justify-center">Umów konsultację</button>
+  </div>
+</header>
 
-    <!-- ═══════════════════════════════════════════════════════ HERO -->
-    <section class="dot-grid relative min-h-screen flex items-center pt-28 pb-24 overflow-hidden">
-      <div class="glow-blob blob-a w-[650px] h-[650px] bg-[#3B82F6]" style="top:-12rem;left:-14rem;opacity:.13;"></div>
-      <div class="glow-blob blob-b w-[500px] h-[500px] bg-[#6366F1]" style="bottom:-10rem;right:-10rem;opacity:.12;"></div>
+<main>
 
-      <div class="max-w-5xl mx-auto px-6 relative z-10">
+<!-- ═══════════════════════════════════════════════════════════ HERO -->
+<section class="dot-grid relative min-h-screen flex items-center pt-28 pb-16 overflow-hidden">
+  <div class="glow-blob blob-a" style="top:-12rem;left:-14rem;width:650px;height:650px;background:var(--glow-a);opacity:1;"></div>
+  <div class="glow-blob blob-b" style="bottom:-10rem;right:-10rem;width:500px;height:500px;background:var(--glow-b);opacity:1;"></div>
 
-        <div class="mb-6 fade-up" id="hero-0">
-          <span class="eyebrow">Agencja SEO &amp; Google Ads</span>
+  <div class="max-w-6xl mx-auto px-6 relative z-10 grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+
+    <!-- Left: copy -->
+    <div>
+      <div class="mb-6 fade-up" id="h0">
+        <span class="eyebrow">Agencja SEO &amp; Google Ads</span>
+      </div>
+      <h1 class="font-heading font-bold text-5xl md:text-6xl xl:text-7xl leading-[1.04] mb-6 text-c-text fade-up" id="h1">
+        Zamieniamy<br />kliknięcia<br /><span class="gradient-text">w klientów.</span>
+      </h1>
+      <p class="text-lg md:text-xl max-w-lg mb-10 leading-relaxed text-c-muted fade-up" id="h2">
+        Łączymy ruch organiczny z płatnym, żeby Twoja firma rosła&nbsp;—
+        mierzalnie, systematycznie, bez przepalania budżetu na kampanie,
+        które nie konwertują.
+      </p>
+      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 fade-up" id="h3">
+        <button onclick="openCalendly()" class="btn-primary text-base">
+          Umów bezpłatną konsultację
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </button>
+        <a href="#uslugi" class="btn-ghost text-base">Sprawdź usługi</a>
+      </div>
+      <!-- Trust pills -->
+      <div class="flex flex-wrap gap-x-7 gap-y-2 fade-up" id="h4">
+        <div class="flex items-center gap-2">
+          <span style="width:8px;height:8px;border-radius:50%;background:#22C55E;display:block;"></span>
+          <span class="text-sm text-c-muted">Bezpłatna rozmowa wstępna</span>
         </div>
-
-        <h1 class="font-heading font-bold text-5xl md:text-7xl text-text leading-[1.04] mb-6 max-w-4xl fade-up" id="hero-1">
-          Zamieniamy<br />
-          kliknięcia<br />
-          <span class="gradient-text">w klientów.</span>
-        </h1>
-
-        <p class="text-muted text-lg md:text-xl max-w-2xl mb-10 leading-relaxed fade-up" id="hero-2">
-          Łączymy ruch organiczny z płatnym, żeby Twoja firma rosła&nbsp;—
-          mierzalnie, systematycznie, bez przepalania budżetu na kampanie,
-          które nie konwertują.
-        </p>
-
-        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-14 fade-up" id="hero-3">
-          <button onclick="openCalendly()" class="btn-primary text-base">
-            Umów bezpłatną konsultację
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <path d="M5 12h14M12 5l7 7-7 7"/>
-            </svg>
-          </button>
-          <a href="#uslugi" class="btn-ghost text-base">
-            Sprawdź nasze usługi
-          </a>
+        <div class="flex items-center gap-2">
+          <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:block;"></span>
+          <span class="text-sm text-c-muted">Raport co miesiąc</span>
         </div>
-
-        <!-- Trust pills -->
-        <div class="flex flex-wrap items-center gap-x-8 gap-y-3 fade-up" id="hero-4">
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-green-400 block"></span>
-            <span class="text-muted text-sm">Bezpłatna rozmowa wstępna</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-accent block"></span>
-            <span class="text-muted text-sm">Raportowanie co miesiąc</span>
-          </div>
-          <div class="flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-indigo-400 block"></span>
-            <span class="text-muted text-sm">Bez umów na rok z góry</span>
-          </div>
+        <div class="flex items-center gap-2">
+          <span style="width:8px;height:8px;border-radius:50%;background:#818CF8;display:block;"></span>
+          <span class="text-sm text-c-muted">Bez rocznych umów z góry</span>
         </div>
       </div>
+    </div>
 
-      <!-- Scroll indicator -->
-      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator" aria-hidden="true">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-             stroke="rgba(100,116,139,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-          <path d="M12 5v14M5 12l7 7 7-7"/>
+    <!-- Right: SVG Dashboard mockup -->
+    <div class="hidden lg:flex items-center justify-center fade-up" id="h5">
+      <div style="position:relative;filter:drop-shadow(0 24px 64px var(--glow-a));">
+        <svg width="480" height="348" viewBox="0 0 480 348" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <style>
+              .db-card   { fill: var(--surface); stroke: var(--border); stroke-width: 1; }
+              .db-inner  { fill: var(--bg); }
+              .db-txt    { fill: var(--text); font-family: 'Space Grotesk', sans-serif; }
+              .db-muted  { fill: var(--muted); font-family: 'DM Sans', sans-serif; }
+              .db-accent { fill: var(--accent); font-family: 'Space Grotesk', sans-serif; }
+              .db-green  { fill: #22C55E; }
+              .db-gridln { stroke: var(--border); stroke-width: 1; }
+            </style>
+            <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--accent)" stop-opacity="0.9"/>
+              <stop offset="100%" stop-color="var(--accent)" stop-opacity="0.4"/>
+            </linearGradient>
+          </defs>
+
+          <!-- Main container -->
+          <rect x="0" y="0" width="480" height="348" rx="16" class="db-card"/>
+
+          <!-- Header bar -->
+          <rect x="0" y="0" width="480" height="44" rx="16" class="db-inner" style="stroke:none"/>
+          <rect x="0" y="28" width="480" height="16" class="db-inner" style="stroke:none"/>
+          <circle cx="18" cy="22" r="5" fill="#EF4444" opacity=".7"/>
+          <circle cx="34" cy="22" r="5" fill="#FBBF24" opacity=".7"/>
+          <circle cx="50" cy="22" r="5" fill="#22C55E" opacity=".7"/>
+          <text x="240" y="26" text-anchor="middle" class="db-muted" font-size="10">Dashboard analityczny — Kwiecień 2026</text>
+
+          <!-- Metric card 1: Traffic -->
+          <rect x="12" y="54" width="140" height="68" rx="8" class="db-inner" style="stroke:none"/>
+          <text x="22" y="70" class="db-muted" font-size="9">RUCH ORGANICZNY</text>
+          <text x="22" y="96" class="db-txt" font-size="22" font-weight="700">+138%</text>
+          <text x="22" y="113" class="db-green" font-size="9">▲ vs poprzedni miesiąc</text>
+
+          <!-- Metric card 2: Leads -->
+          <rect x="164" y="54" width="140" height="68" rx="8" class="db-inner" style="stroke:none"/>
+          <text x="174" y="70" class="db-muted" font-size="9">NOWE LEADY</text>
+          <text x="174" y="96" class="db-txt" font-size="22" font-weight="700">247</text>
+          <text x="174" y="113" class="db-green" font-size="9">▲ +43 powyżej planu</text>
+
+          <!-- Metric card 3: CPA -->
+          <rect x="316" y="54" width="152" height="68" rx="8" class="db-inner" style="stroke:none"/>
+          <text x="326" y="70" class="db-muted" font-size="9">KOSZT NA LEAD</text>
+          <text x="326" y="96" class="db-accent" font-size="22" font-weight="700">48 zł</text>
+          <text x="326" y="113" class="db-green" font-size="9">▼ -22% vs cel</text>
+
+          <!-- Chart label -->
+          <text x="14" y="144" class="db-txt" font-size="10" font-weight="600">Ruch organiczny — ostatnie 6 miesięcy</text>
+
+          <!-- Chart area -->
+          <rect x="12" y="152" width="456" height="150" rx="8" class="db-inner" style="stroke:none"/>
+
+          <!-- Y-axis labels -->
+          <text x="16" y="167" class="db-muted" font-size="8">12k</text>
+          <text x="16" y="197" class="db-muted" font-size="8">8k</text>
+          <text x="16" y="227" class="db-muted" font-size="8">4k</text>
+          <text x="16" y="293" class="db-muted" font-size="8">0</text>
+
+          <!-- Grid lines -->
+          <line x1="40" y1="162" x2="462" y2="162" class="db-gridln"/>
+          <line x1="40" y1="192" x2="462" y2="192" class="db-gridln"/>
+          <line x1="40" y1="222" x2="462" y2="222" class="db-gridln"/>
+          <line x1="40" y1="252" x2="462" y2="252" class="db-gridln"/>
+          <line x1="40" y1="292" x2="462" y2="292" class="db-gridln"/>
+
+          <!-- Bars (6 months, growing left→right) -->
+          <!-- Bar base labels -->
+          <text x="78"  y="304" text-anchor="middle" class="db-muted" font-size="8">Sty</text>
+          <text x="147" y="304" text-anchor="middle" class="db-muted" font-size="8">Lut</text>
+          <text x="216" y="304" text-anchor="middle" class="db-muted" font-size="8">Mar</text>
+          <text x="285" y="304" text-anchor="middle" class="db-muted" font-size="8">Kwi</text>
+          <text x="354" y="304" text-anchor="middle" class="db-muted" font-size="8">Maj</text>
+          <text x="423" y="304" text-anchor="middle" class="db-muted" font-size="8">Cze</text>
+
+          <!-- Bar heights (growing): 36, 52, 72, 90, 108, 128 px -->
+          <rect x="53"  y="256" width="50" height="36"  rx="4" fill="url(#barGrad)" opacity=".45"/>
+          <rect x="122" y="240" width="50" height="52"  rx="4" fill="url(#barGrad)" opacity=".55"/>
+          <rect x="191" y="220" width="50" height="72"  rx="4" fill="url(#barGrad)" opacity=".65"/>
+          <rect x="260" y="202" width="50" height="90"  rx="4" fill="url(#barGrad)" opacity=".75"/>
+          <rect x="329" y="184" width="50" height="108" rx="4" fill="url(#barGrad)" opacity=".88"/>
+          <rect x="398" y="164" width="50" height="128" rx="4" fill="url(#barGrad)"/>
+
+          <!-- Trend line -->
+          <polyline points="78,256 147,240 216,220 285,202 354,184 423,164"
+                    stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <circle cx="78"  cy="256" r="3.5" fill="#22C55E"/>
+          <circle cx="147" cy="240" r="3.5" fill="#22C55E"/>
+          <circle cx="216" cy="220" r="3.5" fill="#22C55E"/>
+          <circle cx="285" cy="202" r="3.5" fill="#22C55E"/>
+          <circle cx="354" cy="184" r="3.5" fill="#22C55E"/>
+          <circle cx="423" cy="164" r="5"   fill="#22C55E" stroke="var(--surface)" stroke-width="2"/>
+
+          <!-- Bottom row: keyword positions -->
+          <text x="14" y="326" class="db-txt" font-size="10" font-weight="600">Pozycje top-3</text>
+          <rect x="14"  y="332" width="94" height="8" rx="3" fill="var(--accent)" opacity=".25"/>
+          <rect x="14"  y="332" width="72" height="8" rx="3" fill="var(--accent)"/>
+          <rect x="120" y="332" width="94" height="8" rx="3" fill="var(--accent)" opacity=".25"/>
+          <rect x="120" y="332" width="55" height="8" rx="3" fill="#22C55E"/>
+          <rect x="226" y="332" width="94" height="8" rx="3" fill="var(--accent)" opacity=".25"/>
+          <rect x="226" y="332" width="40" height="8" rx="3" fill="#FBBF24"/>
+          <text x="368" y="340" class="db-muted" font-size="9" font-weight="600">+24 frazy Top-10 ↑</text>
         </svg>
       </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- ═══════════════════════════════════════════════════════ SERVICES -->
-    <section id="uslugi" class="py-28 px-6">
-      <div class="max-w-6xl mx-auto">
-
-        <div class="text-center mb-16">
-          <span class="eyebrow fade-up">Usługi</span>
-          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
-            Pełne spektrum<br />pozyskiwania ruchu
-          </h2>
-          <p class="text-muted text-lg max-w-xl mx-auto fade-up d2">
-            SEO i płatne kampanie w jednym miejscu — spójne dane, spójne decyzje,
-            lepszy ROAS i wyższa widoczność organiczna jednocześnie.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
-
-          <div class="card p-7 fade-up d1">
-            <div class="icon-box mb-5" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
-              </svg>
-            </div>
-            <span class="service-tag">Organiczne</span>
-            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">SEO</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Pozycjonowanie na frazy z intencją zakupową, optymalizacja techniczna,
-              linkowanie i content, które buduje autorytet domeny.
-            </p>
-          </div>
-
-          <div class="card p-7 fade-up d2">
-            <div class="icon-box mb-5" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-              </svg>
-            </div>
-            <span class="service-tag">Płatne</span>
-            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Google Ads</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Kampanie Search, Performance Max i Shopping z precyzyjnym
-              targetowaniem. Fokus na CPA — nie na wydatkach.
-            </p>
-          </div>
-
-          <div class="card p-7 fade-up d3">
-            <div class="icon-box mb-5" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"/>
-                <line x1="12" y1="20" x2="12" y2="4"/>
-                <line x1="6"  y1="20" x2="6"  y2="14"/>
-              </svg>
-            </div>
-            <span class="service-tag">Dane</span>
-            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Analityka</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              GA4, Google Tag Manager, lejki konwersji, attribution modelling.
-              Wiesz dokładnie, co przynosi wyniki — co przepala budżet.
-            </p>
-          </div>
-
-          <div class="card p-7 fade-up d4">
-            <div class="icon-box mb-5" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                <polyline points="14 2 14 8 20 8"/>
-                <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
-              </svg>
-            </div>
-            <span class="service-tag">Strategia</span>
-            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Audyt i strategia</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Audyt SEO i kampanii, analiza konkurencji, mapa słów kluczowych
-              i plan działania z priorytetami i szacowanym ROI.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- ═══════════════════════════════════════════════════════ PROCESS -->
-    <section id="proces" class="py-28 px-6 bg-surface">
-      <div class="max-w-5xl mx-auto">
-
-        <div class="text-center mb-16">
-          <span class="eyebrow fade-up">Jak działamy</span>
-          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
-            Trzy etapy,<br />jeden fokus: Twój wzrost
-          </h2>
-          <p class="text-muted text-lg max-w-lg mx-auto fade-up d2">
-            Bez chaosu onboardingowego. Od audytu do pierwszych wyników
-            w&nbsp;30&nbsp;dni.
-          </p>
-        </div>
-
-        <div class="grid md:grid-cols-3 gap-6">
-
-          <div class="card p-8 fade-up d1">
-            <span class="step-num">01</span>
-            <div class="icon-box my-4" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
-                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
-              </svg>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Audyt i strategia</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Analizujemy widoczność organiczną, kampanie PPC, analitykę
-              i konkurencję. Na wyjściu: lista priorytetów z szacowanym
-              wpływem na przychód.
-            </p>
-          </div>
-
-          <div class="card p-8 fade-up d2">
-            <span class="step-num">02</span>
-            <div class="icon-box my-4" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
-              </svg>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Wdrożenie i optymalizacja</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Realizujemy plan: optymalizacje techniczne, content, struktura
-              kampanii, bidding, rozbudowa słów kluczowych. Ciągłe testy,
-              żaden budżet nie jest marnowany.
-            </p>
-          </div>
-
-          <div class="card p-8 fade-up d3">
-            <span class="step-num">03</span>
-            <div class="icon-box my-4" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Raportowanie i skalowanie</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Dwa raporty miesięcznie: działań i wyników. Widzisz dokładnie,
-              co zrobiliśmy i jaki to miało efekt. Na bazie danych decydujemy,
-              co skalujemy.
-            </p>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- ═══════════════════════════════════════════════════════ STATS -->
-    <section id="wyniki" class="py-28 px-6">
-      <div class="max-w-5xl mx-auto">
-
-        <div class="text-center mb-16">
-          <span class="eyebrow fade-up">Liczby</span>
-          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
-            Dane zamiast obietnic
-          </h2>
-          <p class="text-muted text-lg max-w-lg mx-auto fade-up d2">
-            Nie sprzedajemy "efektów w 3 miesiące". Budujemy systemy
-            pozyskiwania ruchu, które działają latami.
-          </p>
-        </div>
-
-        <!-- Stats row -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
-
-          <div class="card p-8 text-center fade-up d1">
-            <div class="stat-num text-5xl mb-3">
-              <span class="counter" data-target="87">0</span><span class="text-3xl">%</span>
-            </div>
-            <p class="text-muted text-sm leading-snug">klientów zostaje z nami dłużej niż 12 miesięcy</p>
-          </div>
-
-          <div class="card p-8 text-center fade-up d2">
-            <div class="stat-num text-5xl mb-3">
-              <span class="counter" data-target="5">0</span><span class="text-3xl">+</span>
-            </div>
-            <p class="text-muted text-sm leading-snug">lat doświadczenia każdego specjalisty w projekcie</p>
-          </div>
-
-          <div class="card p-8 text-center fade-up d3">
-            <div class="stat-num text-5xl mb-3">
-              <span class="counter" data-target="2">0</span>
-            </div>
-            <p class="text-muted text-sm leading-snug">raporty miesięcznie: działań i wyników</p>
-          </div>
-
-          <div class="card p-8 text-center fade-up d4">
-            <div class="stat-num text-5xl mb-3">
-              <span class="counter" data-target="0">0</span>
-            </div>
-            <p class="text-muted text-sm leading-snug">juniorów zaangażowanych w prowadzenie projektów</p>
-          </div>
-
-        </div>
-
-        <!-- Why us bullets -->
-        <div class="grid md:grid-cols-2 gap-4">
-
-          <div class="card p-5 flex items-start gap-4 fade-up d1">
-            <div class="icon-box" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-text text-sm mb-1">Tylko seniorzy</h4>
-              <p class="text-muted text-sm leading-relaxed">Żadnych juniorów uczących się na Twoim projekcie. Każdy specjalista ma minimum 5 lat doświadczenia w swojej dziedzinie.</p>
-            </div>
-          </div>
-
-          <div class="card p-5 flex items-start gap-4 fade-up d2">
-            <div class="icon-box" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="12" y1="1" x2="12" y2="23"/>
-                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-text text-sm mb-1">Wynagrodzenie powiązane z wynikami</h4>
-              <p class="text-muted text-sm leading-relaxed">Część naszego wynagrodzenia zależy od osiągniętych celów. Mamy realny powód, żeby Twoje kampanie działały.</p>
-            </div>
-          </div>
-
-          <div class="card p-5 flex items-start gap-4 fade-up d3">
-            <div class="icon-box" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
-                <circle cx="9" cy="7" r="4"/>
-                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-text text-sm mb-1">Dedykowany opiekun projektu</h4>
-              <p class="text-muted text-sm leading-relaxed">Jeden punkt kontaktu, który zna Twój biznes i Twoje cele. Bez "przekazywania do właściwego działu".</p>
-            </div>
-          </div>
-
-          <div class="card p-5 flex items-start gap-4 fade-up d4">
-            <div class="icon-box" aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="10"/>
-                <polyline points="12 6 12 12 16 14"/>
-              </svg>
-            </div>
-            <div>
-              <h4 class="font-heading font-semibold text-text text-sm mb-1">Transparentność bez zbędnych spotkań</h4>
-              <p class="text-muted text-sm leading-relaxed">Dwa raporty miesięcznie z pełnym wglądem w działania i wyniki. Masz kontrolę bez mikrozarządzania.</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <div class="section-divider"></div>
-
-    <!-- ═══════════════════════════════════════════════════════ CTA -->
-    <section class="relative py-28 px-6 overflow-hidden" id="konsultacja">
-      <div class="glow-blob blob-a w-[500px] h-[500px] bg-[#3B82F6]" style="top:-8rem;right:-8rem;opacity:.11;"></div>
-      <div class="glow-blob blob-b w-[400px] h-[400px] bg-[#6366F1]" style="bottom:-6rem;left:-6rem;opacity:.1;"></div>
-
-      <div class="max-w-2xl mx-auto text-center relative z-10">
-
-        <span class="eyebrow fade-up">Bezpłatna konsultacja · 30 minut</span>
-
-        <h2 class="font-heading font-bold text-4xl md:text-6xl text-text mt-8 mb-6 leading-tight fade-up d1">
-          Sprawdź, czy<br />
-          <span class="gradient-text">możemy Ci pomóc.</span>
-        </h2>
-
-        <p class="text-muted text-lg mb-10 max-w-lg mx-auto leading-relaxed fade-up d2">
-          30-minutowa rozmowa bez zobowiązań. Opowiemy, co widzimy
-          w Twojej branży i co realistycznie możemy zrobić dla Twojego
-          biznesu — z danymi w ręku.
-        </p>
-
-        <div class="fade-up d3">
-          <button onclick="openCalendly()" class="btn-primary text-lg px-8 py-4">
-            Zarezerwuj termin
-            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-              <rect x="3" y="4" width="18" height="18" rx="2"/>
-              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
-            </svg>
-          </button>
-        </div>
-
-        <p class="text-muted text-sm mt-6 fade-up d4">
-          Wolisz mailowo? Napisz na
-          <a href="mailto:[EMAIL]" class="text-accent-light hover:underline">[EMAIL]</a>
-        </p>
-
-      </div>
-    </section>
-
-  </main>
-
-  <!-- ═══════════════════════════════════════════════════════ FOOTER -->
-  <footer class="border-t border-[rgba(255,255,255,0.07)] py-8 px-6">
-    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-      <p class="text-muted text-sm">&copy; 2026 [DOMAIN]. Wszelkie prawa zastrzeżone.</p>
-      <nav class="flex items-center gap-6" aria-label="Stopka">
-        <a href="[PRIVACY_URL]" class="text-muted text-sm hover:text-text transition-colors">Polityka prywatności</a>
-        <a href="mailto:[EMAIL]" class="text-muted text-sm hover:text-text transition-colors">Kontakt</a>
-      </nav>
     </div>
-  </footer>
+  </div>
 
-  <!-- Calendly widget JS -->
-  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+  <!-- Scroll indicator -->
+  <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator" aria-hidden="true">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+         stroke="var(--muted)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" opacity=".5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+</section>
 
-  <script>
-    /* ── Calendly popup ──────────────────────────────────────────── */
-    function openCalendly() {
-      const url = 'https://calendly.com/PLACEHOLDER';
-      if (typeof Calendly !== 'undefined') {
-        Calendly.initPopupWidget({ url });
-      } else {
-        window.open(url, '_blank', 'noopener,noreferrer');
-      }
-      return false;
+<!-- ═══════════════════════════════════════════════════════════ PROOF BAR -->
+<div class="proof-bar py-10 px-6">
+  <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+    <div>
+      <div class="proof-num"><span class="counter" data-target="138">0</span>%</div>
+      <p class="text-xs text-c-muted mt-1">średni wzrost ruchu organicznego</p>
+    </div>
+    <div>
+      <div class="proof-num"><span class="counter" data-target="87">0</span>%</div>
+      <p class="text-xs text-c-muted mt-1">retencja klientów po 12 miesiącach</p>
+    </div>
+    <div>
+      <div class="proof-num"><span class="counter" data-target="5">0</span><span style="font-size:1.4rem">+</span></div>
+      <p class="text-xs text-c-muted mt-1">lat doświadczenia specjalistów</p>
+    </div>
+    <div>
+      <div class="proof-num"><span class="counter" data-target="0">0</span></div>
+      <p class="text-xs text-c-muted mt-1">juniorów w projektach klientów</p>
+    </div>
+  </div>
+</div>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ SERVICES -->
+<section id="uslugi" class="py-28 px-6">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="eyebrow fade-up">Usługi</span>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
+        Pełne spektrum<br />pozyskiwania ruchu
+      </h2>
+      <p class="text-lg max-w-xl mx-auto text-c-muted fade-up d2">
+        SEO i płatne kampanie w jednym miejscu — spójne dane, spójne decyzje,
+        lepszy ROAS i wyższa widoczność organiczna jednocześnie.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+      <div class="card p-7 fade-up d1">
+        <div class="icon-box mb-5" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+          </svg>
+        </div>
+        <span class="service-tag">Organiczne</span>
+        <h3 class="font-heading font-semibold text-base text-c-text mt-3 mb-3">SEO</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Pozycjonowanie na frazy z intencją zakupową, optymalizacja techniczna,
+          linkowanie i content, które buduje autorytet domeny.
+        </p>
+      </div>
+
+      <div class="card p-7 fade-up d2">
+        <div class="icon-box mb-5" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+          </svg>
+        </div>
+        <span class="service-tag">Płatne</span>
+        <h3 class="font-heading font-semibold text-base text-c-text mt-3 mb-3">Google Ads</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Kampanie Search, Performance Max i Shopping z precyzyjnym
+          targetowaniem. Fokus na CPA — nie na wydatkach.
+        </p>
+      </div>
+
+      <div class="card p-7 fade-up d3">
+        <div class="icon-box mb-5" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="18" y1="20" x2="18" y2="10"/>
+            <line x1="12" y1="20" x2="12" y2="4"/>
+            <line x1="6"  y1="20" x2="6"  y2="14"/>
+          </svg>
+        </div>
+        <span class="service-tag">Dane</span>
+        <h3 class="font-heading font-semibold text-base text-c-text mt-3 mb-3">Analityka</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          GA4, Google Tag Manager, lejki konwersji, attribution modelling.
+          Wiesz dokładnie, co przynosi wyniki — co przepala budżet.
+        </p>
+      </div>
+
+      <div class="card p-7 fade-up d4">
+        <div class="icon-box mb-5" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+        </div>
+        <span class="service-tag">Strategia</span>
+        <h3 class="font-heading font-semibold text-base text-c-text mt-3 mb-3">Audyt i strategia</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Audyt SEO i kampanii, analiza konkurencji, mapa słów kluczowych
+          i plan działania z priorytetami i szacowanym ROI.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ FUNNEL -->
+<section id="lejek" class="py-28 px-6 section-surface2">
+  <div class="max-w-6xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="eyebrow fade-up">Lejek przychodów</span>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
+        Jak budujemy<br />Twój lejek sprzedażowy
+      </h2>
+      <p class="text-lg max-w-xl mx-auto text-c-muted fade-up d2">
+        Od pierwszego kliknięcia do sprzedaży — mierzymy, optymalizujemy
+        i skalujemy każdy etap razem.
+      </p>
+    </div>
+
+    <div class="grid lg:grid-cols-2 gap-16 items-center">
+      <!-- SVG Funnel -->
+      <div class="flex justify-center fade-up d1">
+        <svg class="funnel-svg" width="340" height="390" viewBox="0 0 340 390"
+             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Lejek marketingowy">
+          <defs>
+            <style>
+              .fn-lbl { font-family: 'Space Grotesk', sans-serif; font-weight: 600; font-size: 13px; fill: #fff; }
+              .fn-sub { font-family: 'DM Sans', sans-serif; font-size: 10px; fill: rgba(255,255,255,0.75); }
+            </style>
+          </defs>
+
+          <!-- Layer 1: Brand Visibility -->
+          <polygon data-stage="0" points="0,0 340,0 296,88 44,88" fill="#3B82F6"/>
+          <text x="170" y="40" text-anchor="middle" class="fn-lbl">Widoczność marki</text>
+          <text x="170" y="58" text-anchor="middle" class="fn-sub">SEO · Google Ads · Content</text>
+
+          <!-- Gap -->
+          <!-- Layer 2: Traffic -->
+          <polygon data-stage="1" points="48,96 292,96 256,184 84,184" fill="#0EA5E9"/>
+          <text x="170" y="136" text-anchor="middle" class="fn-lbl">Ruch na stronie</text>
+          <text x="170" y="154" text-anchor="middle" class="fn-sub">Intencja zakupowa · UX</text>
+
+          <!-- Layer 3: Leads -->
+          <polygon data-stage="2" points="88,192 252,192 222,280 118,280" fill="#10B981"/>
+          <text x="170" y="232" text-anchor="middle" class="fn-lbl">Kwalifikowane leady</text>
+          <text x="170" y="250" text-anchor="middle" class="fn-sub">Konwersja · Landing pages</text>
+
+          <!-- Layer 4: Sales -->
+          <polygon data-stage="3" points="122,288 218,288 198,370 142,370" fill="#22C55E"/>
+          <text x="170" y="324" text-anchor="middle" class="fn-lbl">Sprzedaż</text>
+          <text x="170" y="342" text-anchor="middle" class="fn-sub">Attribution · ROI</text>
+        </svg>
+      </div>
+
+      <!-- Stage detail cards -->
+      <div class="space-y-3 fade-up d2">
+        <div class="funnel-stage-card active" data-card="0">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="stage-dot" style="background:#3B82F6;"></span>
+            <h4 class="font-heading font-semibold text-sm text-c-text">Widoczność marki</h4>
+          </div>
+          <p class="text-sm text-c-muted leading-relaxed">
+            Docieramy do klientów, zanim zaczną porównywać oferty. SEO, Google Ads
+            i content budują Twoją obecność tam, gdzie Twoi klienci szukają rozwiązań.
+          </p>
+        </div>
+        <div class="funnel-stage-card" data-card="1">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="stage-dot" style="background:#0EA5E9;"></span>
+            <h4 class="font-heading font-semibold text-sm text-c-text">Ruch na stronie</h4>
+          </div>
+          <p class="text-sm text-c-muted leading-relaxed">
+            Nie każdy ruch jest wartościowy. Targetujemy frazy z intencją zakupową
+            i audytujemy UX strony, żeby każda wizyta miała potencjał konwersji.
+          </p>
+        </div>
+        <div class="funnel-stage-card" data-card="2">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="stage-dot" style="background:#10B981;"></span>
+            <h4 class="font-heading font-semibold text-sm text-c-text">Kwalifikowane leady</h4>
+          </div>
+          <p class="text-sm text-c-muted leading-relaxed">
+            Optymalizujemy landing pages, formularze i ścieżki konwersji.
+            Testy A/B na kopii i CTA — decyzje z danych, nie z intuicji.
+          </p>
+        </div>
+        <div class="funnel-stage-card" data-card="3">
+          <div class="flex items-center gap-3 mb-2">
+            <span class="stage-dot" style="background:#22C55E;"></span>
+            <h4 class="font-heading font-semibold text-sm text-c-text">Sprzedaż</h4>
+          </div>
+          <p class="text-sm text-c-muted leading-relaxed">
+            Pełna analityka attribution — wiemy, który kanał i które słowo kluczowe
+            wygenerowało sprzedaż. Skalujemy to, co działa, przerywamy to, co nie.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ COMPARISON -->
+<section class="py-28 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="eyebrow fade-up">Tradycyjny vs. nasz model</span>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
+        Marketing oparty na&nbsp;danych,<br />nie na&nbsp;przeczuciach
+      </h2>
+      <p class="text-lg max-w-xl mx-auto text-c-muted fade-up d2">
+        Tradycyjne agencje optymalizują pod metryki kanałów.
+        My optymalizujemy pod wyniki biznesowe.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-6">
+      <!-- Traditional -->
+      <div class="cmp-col cmp-col-no fade-up d1">
+        <h3 class="font-heading font-semibold text-base mb-6 text-c-muted">Tradycyjny marketing</h3>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-no">✕</span>
+          <div>
+            <strong class="text-c-text text-sm">Silosowane dane</strong><br/>
+            <span class="text-c-muted text-sm">SEO i Ads to oddzielne światy — brak wspólnego obrazu lejka i customer journey.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-no">✕</span>
+          <div>
+            <strong class="text-c-text text-sm">Metryki kanałów</strong><br/>
+            <span class="text-c-muted text-sm">Raportowanie kliknięć i impresji — bez przełożenia na leady i przychód.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-no">✕</span>
+          <div>
+            <strong class="text-c-text text-sm">Decyzje na "czucie"</strong><br/>
+            <span class="text-c-muted text-sm">Zmiany w kampaniach i treściach bez danych atrybucji — zgadywanie, co działa.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-no">✕</span>
+          <div>
+            <strong class="text-c-text text-sm">Przepalanie budżetu</strong><br/>
+            <span class="text-c-muted text-sm">Budżet pływa między kanałami bez jasnej strategii skalowania tego, co konwertuje.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Our model -->
+      <div class="cmp-col cmp-col-yes fade-up d2">
+        <h3 class="font-heading font-semibold text-base mb-6 text-c-text">Nasz model</h3>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-yes">✓</span>
+          <div>
+            <strong class="text-c-text text-sm">Pełny widok lejka</strong><br/>
+            <span class="text-c-muted text-sm">SEO, Ads i analityka tworzą jeden spójny ekosystem — widzisz całą drogę klienta.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-yes">✓</span>
+          <div>
+            <strong class="text-c-text text-sm">Metryki biznesowe</strong><br/>
+            <span class="text-c-muted text-sm">Raportujemy CPA, ROAS, przychód i retencję — nie impresjach, ale na wynikach.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-yes">✓</span>
+          <div>
+            <strong class="text-c-text text-sm">Attribution & dane</strong><br/>
+            <span class="text-c-muted text-sm">GA4 + GTM skonfigurowane pod Twój biznes. Każda decyzja ma podstawę w danych.</span>
+          </div>
+        </div>
+        <div class="cmp-item">
+          <span class="cmp-icon cmp-icon-yes">✓</span>
+          <div>
+            <strong class="text-c-text text-sm">Optymalizacja pod ROI</strong><br/>
+            <span class="text-c-muted text-sm">Skalujemy kanały, które przynoszą przychód, wycinamy to, co generuje koszt bez zwrotu.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════════════════ PHOTO SECTION -->
+<section class="relative overflow-hidden">
+  <img
+    src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=1600&q=80"
+    alt="Dashboard analityczny z wynikami kampanii"
+    class="w-full object-cover"
+    style="height:420px; object-position: center;"
+    loading="lazy"
+  />
+  <div style="position:absolute;inset:0;background:linear-gradient(to right, var(--bg) 0%, rgba(8,14,28,0.82) 45%, rgba(8,14,28,0.45) 100%);"></div>
+
+  <div class="absolute inset-0 flex items-center">
+    <div class="max-w-6xl mx-auto px-6 w-full">
+      <div class="max-w-lg">
+        <p class="text-sm font-semibold uppercase tracking-widest mb-4" style="color:var(--accent)">Mierzone wyniki</p>
+        <p class="font-heading font-bold text-3xl md:text-4xl leading-tight mb-6" style="color:#F1F5F9">
+          Każda decyzja ma uzasadnienie w&nbsp;liczbach.
+        </p>
+        <p class="text-base leading-relaxed mb-8" style="color:rgba(241,245,249,0.7)">
+          Konfigurujemy pełny tracking konwersji — od pierwszego kliknięcia
+          reklamy po finalizację zakupu. Wiesz, skąd pochodzi każdy lead.
+        </p>
+        <button onclick="openCalendly()" class="btn-primary text-sm">
+          Porozmawiaj o analityce →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ PROCESS -->
+<section id="proces" class="py-28 px-6 section-surface">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="eyebrow fade-up">Jak działamy</span>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
+        Trzy etapy,<br />jeden fokus: Twój wzrost
+      </h2>
+      <p class="text-lg max-w-lg mx-auto text-c-muted fade-up d2">
+        Bez chaosu onboardingowego. Od audytu do pierwszych wyników w 30 dni.
+      </p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="card p-8 fade-up d1">
+        <span class="step-num">01</span>
+        <div class="icon-box my-4" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+          </svg>
+        </div>
+        <h3 class="font-heading font-semibold text-lg text-c-text mb-3">Audyt i strategia</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Analizujemy widoczność organiczną, kampanie PPC, analitykę i konkurencję.
+          Na wyjściu: lista priorytetów z szacowanym wpływem na przychód.
+        </p>
+      </div>
+      <div class="card p-8 fade-up d2">
+        <span class="step-num">02</span>
+        <div class="icon-box my-4" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+          </svg>
+        </div>
+        <h3 class="font-heading font-semibold text-lg text-c-text mb-3">Wdrożenie i optymalizacja</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Realizujemy plan: optymalizacje techniczne, content, struktura kampanii,
+          bidding, rozbudowa słów kluczowych. Ciągłe testy — żaden budżet nie jest marnowany.
+        </p>
+      </div>
+      <div class="card p-8 fade-up d3">
+        <span class="step-num">03</span>
+        <div class="icon-box my-4" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <h3 class="font-heading font-semibold text-lg text-c-text mb-3">Raportowanie i skalowanie</h3>
+        <p class="text-sm leading-relaxed text-c-muted">
+          Dwa raporty miesięcznie: działań i wyników. Widzisz dokładnie, co zrobiliśmy
+          i jaki to miało efekt. Na bazie danych decydujemy, co skalujemy.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ STATS + WHY US -->
+<section id="wyniki" class="py-28 px-6">
+  <div class="max-w-5xl mx-auto">
+    <div class="text-center mb-16">
+      <span class="eyebrow fade-up">Liczby</span>
+      <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
+        Dane zamiast obietnic
+      </h2>
+      <p class="text-lg max-w-lg mx-auto text-c-muted fade-up d2">
+        Nie sprzedajemy "efektów w 3 miesiące". Budujemy systemy pozyskiwania
+        ruchu, które działają latami.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+      <div class="card p-8 text-center fade-up d1">
+        <div class="stat-num text-5xl mb-3">
+          <span class="counter" data-target="87">0</span><span style="font-size:1.8rem">%</span>
+        </div>
+        <p class="text-sm leading-snug text-c-muted">klientów zostaje z nami dłużej niż 12 miesięcy</p>
+      </div>
+      <div class="card p-8 text-center fade-up d2">
+        <div class="stat-num text-5xl mb-3">
+          <span class="counter" data-target="5">0</span><span style="font-size:1.8rem">+</span>
+        </div>
+        <p class="text-sm leading-snug text-c-muted">lat doświadczenia każdego specjalisty w projekcie</p>
+      </div>
+      <div class="card p-8 text-center fade-up d3">
+        <div class="stat-num text-5xl mb-3">
+          <span class="counter" data-target="2">0</span>
+        </div>
+        <p class="text-sm leading-snug text-c-muted">raporty miesięcznie: działań i wyników</p>
+      </div>
+      <div class="card p-8 text-center fade-up d4">
+        <div class="stat-num text-5xl mb-3">
+          <span class="counter" data-target="0">0</span>
+        </div>
+        <p class="text-sm leading-snug text-c-muted">juniorów zaangażowanych w prowadzenie projektów</p>
+      </div>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-4">
+      <div class="card p-5 flex items-start gap-4 fade-up d1">
+        <div class="icon-box" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-heading font-semibold text-c-text text-sm mb-1">Tylko seniorzy</h4>
+          <p class="text-c-muted text-sm leading-relaxed">Żadnych juniorów uczących się na Twoim projekcie. Każdy specjalista ma minimum 5 lat doświadczenia.</p>
+        </div>
+      </div>
+      <div class="card p-5 flex items-start gap-4 fade-up d2">
+        <div class="icon-box" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="1" x2="12" y2="23"/>
+            <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-heading font-semibold text-c-text text-sm mb-1">Wynagrodzenie powiązane z wynikami</h4>
+          <p class="text-c-muted text-sm leading-relaxed">Część naszego wynagrodzenia zależy od osiągniętych celów. Mamy realny powód, żeby Twoje kampanie działały.</p>
+        </div>
+      </div>
+      <div class="card p-5 flex items-start gap-4 fade-up d3">
+        <div class="icon-box" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-heading font-semibold text-c-text text-sm mb-1">Dedykowany opiekun projektu</h4>
+          <p class="text-c-muted text-sm leading-relaxed">Jeden punkt kontaktu, który zna Twój biznes i Twoje cele. Bez "przekazywania do właściwego działu".</p>
+        </div>
+      </div>
+      <div class="card p-5 flex items-start gap-4 fade-up d4">
+        <div class="icon-box" aria-hidden="true">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+               stroke="var(--accent)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+        </div>
+        <div>
+          <h4 class="font-heading font-semibold text-c-text text-sm mb-1">Transparentność bez zbędnych spotkań</h4>
+          <p class="text-c-muted text-sm leading-relaxed">Dwa raporty miesięcznie z pełnym wglądem w działania i wyniki. Masz kontrolę bez mikrozarządzania.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════════════════════════════════════════════════ CTA -->
+<section class="relative py-28 px-6 overflow-hidden" id="konsultacja">
+  <div class="glow-blob blob-a" style="top:-8rem;right:-8rem;width:500px;height:500px;background:var(--glow-a);opacity:1;"></div>
+  <div class="glow-blob blob-b" style="bottom:-6rem;left:-6rem;width:400px;height:400px;background:var(--glow-b);opacity:1;"></div>
+
+  <div class="max-w-2xl mx-auto text-center relative z-10">
+    <span class="eyebrow fade-up">Bezpłatna konsultacja · 30 minut</span>
+    <h2 class="font-heading font-bold text-4xl md:text-6xl text-c-text mt-8 mb-6 leading-tight fade-up d1">
+      Sprawdź, czy<br /><span class="gradient-text">możemy Ci pomóc.</span>
+    </h2>
+    <p class="text-lg mb-10 max-w-lg mx-auto leading-relaxed text-c-muted fade-up d2">
+      30-minutowa rozmowa bez zobowiązań. Opowiemy, co widzimy w Twojej branży
+      i co realistycznie możemy zrobić dla Twojego biznesu — z danymi w ręku.
+    </p>
+    <div class="fade-up d3">
+      <button onclick="openCalendly()" class="btn-primary text-lg px-8 py-4">
+        Zarezerwuj termin
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <rect x="3" y="4" width="18" height="18" rx="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+      </button>
+    </div>
+    <p class="text-sm mt-6 text-c-muted fade-up d4">
+      Wolisz mailowo? Napisz na
+      <a href="mailto:[EMAIL]" style="color:var(--accent)" class="hover:underline">[EMAIL]</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══════════════════════════════════════════════════════════ FOOTER -->
+<footer style="border-top:1px solid var(--border)" class="py-8 px-6">
+  <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+    <p class="text-sm text-c-muted">&copy; 2026 [DOMAIN]. Wszelkie prawa zastrzeżone.</p>
+    <nav class="flex items-center gap-6" aria-label="Stopka">
+      <a href="[PRIVACY_URL]" class="text-sm text-c-muted hover:text-c-text transition-colors">Polityka prywatności</a>
+      <a href="mailto:[EMAIL]" class="text-sm text-c-muted hover:text-c-text transition-colors">Kontakt</a>
+    </nav>
+  </div>
+</footer>
+
+<!-- Calendly JS -->
+<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+<script>
+  /* ── Calendly popup (nie redirect!) ────────────────────── */
+  function openCalendly() {
+    const url = 'https://calendly.com/PLACEHOLDER';
+    if (typeof Calendly !== 'undefined') {
+      Calendly.initPopupWidget({ url });
+    } else {
+      window.open(url, '_blank', 'noopener,noreferrer');
     }
+    return false;
+  }
 
-    /* ── Mobile hamburger ────────────────────────────────────────── */
-    const hamburger   = document.getElementById('hamburger');
-    const mobileMenu  = document.getElementById('mobile-menu');
-    hamburger.addEventListener('click', () => {
-      const open = mobileMenu.classList.toggle('open');
-      hamburger.setAttribute('aria-expanded', open);
+  /* ── Theme toggle ───────────────────────────────────────── */
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('theme', next);
+  });
+
+  /* ── Mobile hamburger ───────────────────────────────────── */
+  const hamburger  = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const open = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', open);
+  });
+  mobileMenu.querySelectorAll('a').forEach(l =>
+    l.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+    })
+  );
+
+  /* ── Scroll animations ──────────────────────────────────── */
+  const fadeIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); fadeIO.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.fade-up').forEach(el => {
+    if (el.id && el.id.startsWith('h')) {
+      const i = parseInt(el.id.slice(1), 10);
+      setTimeout(() => el.classList.add('visible'), 80 + i * 110);
+    } else {
+      fadeIO.observe(el);
+    }
+  });
+
+  /* ── Counter animation ──────────────────────────────────── */
+  const counterIO = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      const el = e.target, target = parseInt(el.dataset.target, 10);
+      counterIO.unobserve(el);
+      if (target === 0) return;
+      const steps = 55, dur = 1400;
+      let step = 0;
+      const ease = t => 1 - Math.pow(1 - t, 3);
+      const timer = setInterval(() => {
+        step++;
+        el.textContent = Math.round(ease(step / steps) * target);
+        if (step >= steps) { el.textContent = target; clearInterval(timer); }
+      }, dur / steps);
     });
-    mobileMenu.querySelectorAll('a').forEach(link =>
-      link.addEventListener('click', () => {
-        mobileMenu.classList.remove('open');
-        hamburger.setAttribute('aria-expanded', 'false');
-      })
-    );
+  }, { threshold: 0.6 });
+  document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
 
-    /* ── Scroll-triggered fade-in (Intersection Observer) ────────── */
-    const fadeIO = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        entry.target.classList.add('visible');
-        fadeIO.unobserve(entry.target);
+  /* ── Funnel interactivity ───────────────────────────────── */
+  const funnelPolygons = document.querySelectorAll('.funnel-svg polygon');
+  const funnelCards    = document.querySelectorAll('.funnel-stage-card');
+
+  function activateStage(idx) {
+    funnelCards.forEach((c, i) => c.classList.toggle('active', i === idx));
+  }
+  funnelPolygons.forEach(poly => {
+    poly.addEventListener('mouseenter', () => activateStage(parseInt(poly.dataset.stage, 10)));
+    poly.addEventListener('click',      () => activateStage(parseInt(poly.dataset.stage, 10)));
+  });
+  funnelCards.forEach((card, i) => {
+    card.addEventListener('mouseenter', () => {
+      funnelPolygons.forEach((p, j) => {
+        p.style.filter = j === i ? 'brightness(1.18)' : 'brightness(0.85)';
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
-
-    document.querySelectorAll('.fade-up').forEach(el => {
-      const heroEl = el.id && el.id.startsWith('hero-');
-      if (heroEl) {
-        // Hero: stagger on page load
-        const idx = parseInt(el.id.replace('hero-', ''), 10);
-        setTimeout(() => el.classList.add('visible'), 120 + idx * 120);
-      } else {
-        fadeIO.observe(el);
-      }
     });
-
-    /* ── Counter animation ───────────────────────────────────────── */
-    const counterIO = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (!entry.isIntersecting) return;
-        const el     = entry.target;
-        const target = parseInt(el.dataset.target, 10);
-        counterIO.unobserve(el);
-
-        if (target === 0) return; // stays at 0
-
-        const duration = 1400;
-        const steps    = 55;
-        let   step     = 0;
-        const easeOut  = t => 1 - Math.pow(1 - t, 3);
-
-        const timer = setInterval(() => {
-          step++;
-          el.textContent = Math.round(easeOut(step / steps) * target);
-          if (step >= steps) { el.textContent = target; clearInterval(timer); }
-        }, duration / steps);
-      });
-    }, { threshold: 0.6 });
-
-    document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
-  </script>
+    card.addEventListener('mouseleave', () => {
+      funnelPolygons.forEach(p => p.style.filter = '');
+    });
+  });
+</script>
 
 </body>
 </html>
