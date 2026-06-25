@@ -3,14 +3,17 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[DOMAIN] — Analiza strony i audyt wideo</title>
-  <meta name="description" content="Wysyłamy spersonalizowane nagrania wideo z analizą Twojej strony. Twarda analityka, zero szablonów." />
+  <title>[DOMAIN] — Agencja SEO i Google Ads</title>
+  <meta name="description" content="Agencja SEO i Google Ads. Zamieniamy ruch organiczny i płatny w klientów — mierzalnie, bez przepalania budżetu." />
   <meta name="robots" content="noindex, nofollow" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
+
+  <!-- Calendly widget CSS -->
+  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -19,13 +22,13 @@
       theme: {
         extend: {
           colors: {
-            bg:       '#080E1C',
-            surface:  '#0F172A',
-            accent:   '#3B82F6',
+            bg:             '#080E1C',
+            surface:        '#0F172A',
+            accent:         '#3B82F6',
             'accent-hover': '#2563EB',
-            text:     '#F1F5F9',
-            muted:    '#64748B',
-            border:   'rgba(255,255,255,0.07)',
+            'accent-light': '#60A5FA',
+            text:           '#F1F5F9',
+            muted:          '#64748B',
           },
           fontFamily: {
             heading: ['Space Grotesk', 'sans-serif'],
@@ -37,103 +40,165 @@
   </script>
 
   <style>
+    /* ── Base ─────────────────────────────────────────────── */
     html { scroll-behavior: smooth; }
     body { background-color: #080E1C; color: #F1F5F9; font-family: 'DM Sans', sans-serif; }
     h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
 
-    /* Dot grid background */
+    /* ── Dot grid ─────────────────────────────────────────── */
     .dot-grid {
-      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-image: radial-gradient(rgba(255,255,255,0.045) 1px, transparent 1px);
       background-size: 28px 28px;
     }
 
-    /* Ambient glow blobs */
+    /* ── Glow blobs ───────────────────────────────────────── */
     .glow-blob {
       position: absolute;
       border-radius: 50%;
-      filter: blur(120px);
-      opacity: 0.18;
+      filter: blur(140px);
       pointer-events: none;
     }
+    @keyframes blob-float {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      33%       { transform: translate(28px, -18px) scale(1.05); }
+      66%       { transform: translate(-18px, 14px) scale(0.95); }
+    }
+    .blob-a { animation: blob-float 14s ease-in-out infinite; }
+    .blob-b { animation: blob-float 18s ease-in-out infinite reverse; }
 
-    /* Glassmorphism navbar */
+    /* ── Navbar ───────────────────────────────────────────── */
     .glass-nav {
-      background: rgba(8, 14, 28, 0.8);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
+      background: rgba(8, 14, 28, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    /* Card style */
+    /* ── Cards ────────────────────────────────────────────── */
     .card {
       background: #0F172A;
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 12px;
-      transition: border-color 0.2s, transform 0.2s;
+      transition: border-color .25s, transform .25s, box-shadow .25s;
     }
     .card:hover {
-      border-color: rgba(59,130,246,0.3);
-      transform: translateY(-2px);
+      border-color: rgba(59,130,246,0.35);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 32px rgba(59,130,246,0.08);
     }
 
-    /* Stat number */
-    .stat-number {
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 3rem;
-      font-weight: 700;
-      line-height: 1;
-      color: #3B82F6;
+    /* ── Icon box ─────────────────────────────────────────── */
+    .icon-box {
+      width: 44px; height: 44px;
+      border-radius: 10px;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.18);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
     }
 
-    /* CTA button */
+    /* ── Buttons ──────────────────────────────────────────── */
     .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: #3B82F6;
-      color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-weight: 600;
-      padding: 0.875rem 1.75rem;
-      border-radius: 8px;
-      transition: background 0.2s, transform 0.15s;
-      cursor: pointer;
-      text-decoration: none;
-      border: none;
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: #3B82F6; color: #fff;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 600;
+      padding: .875rem 1.75rem; border-radius: 8px;
+      transition: background .2s, transform .15s, box-shadow .2s;
+      cursor: pointer; text-decoration: none; border: none;
+      white-space: nowrap;
     }
     .btn-primary:hover {
-      background: #2563EB;
-      transform: translateY(-1px);
+      background: #2563EB; transform: translateY(-1px);
+      box-shadow: 0 4px 20px rgba(59,130,246,.35);
     }
     .btn-primary:active { transform: translateY(0); }
 
-    /* Eyebrow tag */
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: .5rem;
+      background: transparent; color: #F1F5F9;
+      font-family: 'Space Grotesk', sans-serif; font-weight: 500;
+      padding: .875rem 1.5rem; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.12);
+      transition: border-color .2s, background .2s;
+      cursor: pointer; text-decoration: none; white-space: nowrap;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,.25); background: rgba(255,255,255,.04); }
+
+    /* ── Eyebrow ──────────────────────────────────────────── */
     .eyebrow {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 0.8rem;
-      font-weight: 500;
-      letter-spacing: 0.04em;
+      display: inline-flex; align-items: center; gap: .4rem;
+      font-size: .75rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
       color: #3B82F6;
-      background: rgba(59,130,246,0.1);
-      border: 1px solid rgba(59,130,246,0.2);
-      border-radius: 999px;
-      padding: 0.3rem 0.9rem;
+      background: rgba(59,130,246,.08);
+      border: 1px solid rgba(59,130,246,.2);
+      border-radius: 999px; padding: .3rem 1rem;
     }
 
-    /* Step connector */
-    .step-connector {
-      width: 1px;
-      height: 2rem;
-      background: linear-gradient(to bottom, rgba(59,130,246,0.4), transparent);
-      margin: 0.5rem auto;
+    /* ── Gradient text ────────────────────────────────────── */
+    .gradient-text {
+      background: linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #818CF8 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
-    /* Reduce motion */
+    /* ── Service tag ──────────────────────────────────────── */
+    .service-tag {
+      font-size: .68rem; font-weight: 700;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: #60A5FA;
+      background: rgba(59,130,246,.1);
+      border-radius: 4px; padding: .2rem .55rem;
+    }
+
+    /* ── Stat number ──────────────────────────────────────── */
+    .stat-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 700; line-height: 1; color: #3B82F6;
+    }
+
+    /* ── Step number ──────────────────────────────────────── */
+    .step-num {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: .7rem; font-weight: 700;
+      color: #3B82F6; letter-spacing: .08em;
+    }
+
+    /* ── Section divider ──────────────────────────────────── */
+    .section-divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,.07), transparent);
+    }
+
+    /* ── Scroll indicator ─────────────────────────────────── */
+    @keyframes scroll-bounce {
+      0%, 100% { transform: translateY(0); opacity: .7; }
+      50%       { transform: translateY(7px); opacity: .25; }
+    }
+    .scroll-indicator { animation: scroll-bounce 2s ease-in-out infinite; }
+
+    /* ── Mobile menu ──────────────────────────────────────── */
+    #mobile-menu { display: none; }
+    #mobile-menu.open { display: flex; }
+
+    /* ── Scroll animations ────────────────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-up.d1 { transition-delay: .1s; }
+    .fade-up.d2 { transition-delay: .2s; }
+    .fade-up.d3 { transition-delay: .3s; }
+    .fade-up.d4 { transition-delay: .4s; }
+
+    /* ── Reduce motion ────────────────────────────────────── */
     @media (prefers-reduced-motion: reduce) {
-      .card { transition: none; }
-      .btn-primary { transition: none; }
+      .card, .btn-primary, .btn-ghost { transition: none; }
+      .fade-up { opacity: 1; transform: none; transition: none; }
+      .blob-a, .blob-b { animation: none; }
+      .scroll-indicator { animation: none; }
       html { scroll-behavior: auto; }
     }
   </style>
@@ -141,263 +206,433 @@
 
 <body class="antialiased">
 
-  <!-- NAVBAR -->
+  <!-- ═══════════════════════════════════════════════════════ NAVBAR -->
   <header class="glass-nav fixed top-0 left-0 right-0 z-50">
     <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-      <span class="font-heading font-semibold text-text text-lg tracking-tight">[DOMAIN]</span>
-      <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
-         class="btn-primary text-sm py-2 px-5">
-        Umów rozmowę
-        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
-             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-             aria-hidden="true">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </a>
+
+      <a href="#" class="font-heading font-bold text-xl text-text tracking-tight">[DOMAIN]</a>
+
+      <!-- Desktop nav -->
+      <nav class="hidden md:flex items-center gap-8" aria-label="Nawigacja">
+        <a href="#uslugi" class="text-muted text-sm font-medium hover:text-text transition-colors">Usługi</a>
+        <a href="#proces" class="text-muted text-sm font-medium hover:text-text transition-colors">Jak działamy</a>
+        <a href="#wyniki" class="text-muted text-sm font-medium hover:text-text transition-colors">Wyniki</a>
+      </nav>
+
+      <div class="flex items-center gap-3">
+        <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-5">
+          Umów konsultację
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="4" width="18" height="18" rx="2"/>
+            <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+          </svg>
+        </button>
+
+        <button id="hamburger" class="md:hidden p-2 text-muted hover:text-text transition-colors"
+                aria-label="Otwórz menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile menu -->
+    <div id="mobile-menu" class="flex-col border-t border-[rgba(255,255,255,0.07)] px-6 py-5 gap-5 md:hidden">
+      <a href="#uslugi" class="text-text text-sm font-medium">Usługi</a>
+      <a href="#proces" class="text-text text-sm font-medium">Jak działamy</a>
+      <a href="#wyniki" class="text-text text-sm font-medium">Wyniki</a>
+      <button onclick="openCalendly(); document.getElementById('mobile-menu').classList.remove('open')"
+              class="btn-primary text-sm py-2.5 px-5 w-full justify-center">
+        Umów konsultację
+      </button>
     </div>
   </header>
 
   <main>
 
-    <!-- HERO SECTION -->
-    <section class="dot-grid relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
-      <!-- Glow blobs -->
-      <div class="glow-blob w-96 h-96 bg-accent" style="top: -4rem; left: -6rem;"></div>
-      <div class="glow-blob w-80 h-80 bg-blue-400" style="bottom: 0; right: -4rem;"></div>
+    <!-- ═══════════════════════════════════════════════════════ HERO -->
+    <section class="dot-grid relative min-h-screen flex items-center pt-28 pb-24 overflow-hidden">
+      <div class="glow-blob blob-a w-[650px] h-[650px] bg-[#3B82F6]" style="top:-12rem;left:-14rem;opacity:.13;"></div>
+      <div class="glow-blob blob-b w-[500px] h-[500px] bg-[#6366F1]" style="bottom:-10rem;right:-10rem;opacity:.12;"></div>
 
-      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-        <div class="flex justify-center mb-6">
-          <span class="eyebrow">Analiza strony &middot; Audyt wideo &middot; Rekomendacje</span>
+      <div class="max-w-5xl mx-auto px-6 relative z-10">
+
+        <div class="mb-6 fade-up" id="hero-0">
+          <span class="eyebrow">Agencja SEO &amp; Google Ads</span>
         </div>
 
-        <h1 class="font-heading font-bold text-4xl md:text-6xl text-text leading-tight mb-6">
-          Twoja strona traci&nbsp;klientów.<br />
-          <span class="text-accent">Pokazujemy dokładnie&nbsp;jak.</span>
+        <h1 class="font-heading font-bold text-5xl md:text-7xl text-text leading-[1.04] mb-6 max-w-4xl fade-up" id="hero-1">
+          Zamieniamy<br />
+          kliknięcia<br />
+          <span class="gradient-text">w klientów.</span>
         </h1>
 
-        <p class="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
-          Wysyłamy spersonalizowane nagrania wideo z analizą konkretnej strony&nbsp;—
-          bez szablonów, bez ogólników. Tylko twarda analityka i plan naprawczy.
+        <p class="text-muted text-lg md:text-xl max-w-2xl mb-10 leading-relaxed fade-up" id="hero-2">
+          Łączymy ruch organiczny z płatnym, żeby Twoja firma rosła&nbsp;—
+          mierzalnie, systematycznie, bez przepalania budżetu na kampanie,
+          które nie konwertują.
         </p>
 
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-          <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
-             class="btn-primary text-base">
-            Umów bezpłatną rozmowę
+        <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-14 fade-up" id="hero-3">
+          <button onclick="openCalendly()" class="btn-primary text-base">
+            Umów bezpłatną konsultację
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-                 aria-hidden="true">
+                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
               <path d="M5 12h14M12 5l7 7-7 7"/>
             </svg>
+          </button>
+          <a href="#uslugi" class="btn-ghost text-base">
+            Sprawdź nasze usługi
           </a>
         </div>
 
-        <p class="text-muted text-sm">
-          Czekasz na swoje wideo? <span class="text-text">Odpisz na naszą wiadomość e-mail.</span>
-        </p>
+        <!-- Trust pills -->
+        <div class="flex flex-wrap items-center gap-x-8 gap-y-3 fade-up" id="hero-4">
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-green-400 block"></span>
+            <span class="text-muted text-sm">Bezpłatna rozmowa wstępna</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-accent block"></span>
+            <span class="text-muted text-sm">Raportowanie co miesiąc</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 block"></span>
+            <span class="text-muted text-sm">Bez umów na rok z góry</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scroll indicator -->
+      <div class="absolute bottom-8 left-1/2 -translate-x-1/2 scroll-indicator" aria-hidden="true">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+             stroke="rgba(100,116,139,0.5)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
       </div>
     </section>
 
-    <!-- WHY DID YOU GET AN EMAIL -->
-    <section class="py-24 px-6">
-      <div class="max-w-5xl mx-auto">
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════════════════════════════ SERVICES -->
+    <section id="uslugi" class="py-28 px-6">
+      <div class="max-w-6xl mx-auto">
+
         <div class="text-center mb-16">
-          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
-            Dlaczego dostałeś od nas wiadomość?
+          <span class="eyebrow fade-up">Usługi</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
+            Pełne spektrum<br />pozyskiwania ruchu
           </h2>
-          <p class="text-muted text-lg max-w-xl mx-auto">
-            Nie działamy masowo. Każda wiadomość to efekt konkretnej analizy konkretnej strony.
+          <p class="text-muted text-lg max-w-xl mx-auto fade-up d2">
+            SEO i płatne kampanie w jednym miejscu — spójne dane, spójne decyzje,
+            lepszy ROAS i wyższa widoczność organiczna jednocześnie.
           </p>
         </div>
 
-        <div class="grid md:grid-cols-3 gap-6">
-          <!-- Step 1 -->
-          <div class="card p-8 flex flex-col">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
+        <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-5">
+
+          <div class="card p-7 fade-up d1">
+            <div class="icon-box mb-5" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
               </svg>
             </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Skanujemy rynek</h3>
+            <span class="service-tag">Organiczne</span>
+            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">SEO</h3>
             <p class="text-muted text-sm leading-relaxed">
-              Identyfikujemy strony z wysokim potencjałem biznesowym i krytycznymi lukami,
-              które realnie ograniczają sprzedaż i pozyskiwanie leadów.
+              Pozycjonowanie na frazy z intencją zakupową, optymalizacja techniczna,
+              linkowanie i content, które buduje autorytet domeny.
             </p>
           </div>
 
-          <!-- Step 2 -->
-          <div class="card p-8 flex flex-col">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
+          <div class="card p-7 fade-up d2">
+            <div class="icon-box mb-5" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
               </svg>
             </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Nagrywamy wideo</h3>
+            <span class="service-tag">Płatne</span>
+            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Google Ads</h3>
             <p class="text-muted text-sm leading-relaxed">
-              Przygotowujemy indywidualne nagranie z analizą Twojej strony — pokazujemy dokładnie,
-              gdzie i dlaczego tracisz klientów, wraz z analizą konkurencji.
+              Kampanie Search, Performance Max i Shopping z precyzyjnym
+              targetowaniem. Fokus na CPA — nie na wydatkach.
             </p>
           </div>
 
-          <!-- Step 3 -->
-          <div class="card p-8 flex flex-col">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
+          <div class="card p-7 fade-up d3">
+            <div class="icon-box mb-5" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.69 5.69l.8-.79a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+                <line x1="18" y1="20" x2="18" y2="10"/>
+                <line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6"  y1="20" x2="6"  y2="14"/>
               </svg>
             </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Proponujemy rozmowę</h3>
+            <span class="service-tag">Dane</span>
+            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Analityka</h3>
             <p class="text-muted text-sm leading-relaxed">
-              Tylko jeśli widzimy realną wartość dla Twojego biznesu. Bez nachalnej sprzedaży —
-              rozmowa to omówienie wyników analizy i konkretnych kroków naprawczych.
+              GA4, Google Tag Manager, lejki konwersji, attribution modelling.
+              Wiesz dokładnie, co przynosi wyniki — co przepala budżet.
             </p>
           </div>
+
+          <div class="card p-7 fade-up d4">
+            <div class="icon-box mb-5" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                <polyline points="14 2 14 8 20 8"/>
+                <line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>
+              </svg>
+            </div>
+            <span class="service-tag">Strategia</span>
+            <h3 class="font-heading font-semibold text-base text-text mt-3 mb-3">Audyt i strategia</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Audyt SEO i kampanii, analiza konkurencji, mapa słów kluczowych
+              i plan działania z priorytetami i szacowanym ROI.
+            </p>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- CORE EXPERTISE -->
-    <section class="py-24 px-6 bg-surface">
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════════════════════════════ PROCESS -->
+    <section id="proces" class="py-28 px-6 bg-surface">
       <div class="max-w-5xl mx-auto">
+
         <div class="text-center mb-16">
-          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
-            Co analizujemy podczas audytu
+          <span class="eyebrow fade-up">Jak działamy</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
+            Trzy etapy,<br />jeden fokus: Twój wzrost
           </h2>
-          <p class="text-muted text-lg max-w-xl mx-auto">
-            Każde nagranie obejmuje trzy obszary, które mają bezpośredni wpływ na wyniki biznesowe.
+          <p class="text-muted text-lg max-w-lg mx-auto fade-up d2">
+            Bez chaosu onboardingowego. Od audytu do pierwszych wyników
+            w&nbsp;30&nbsp;dni.
           </p>
         </div>
 
         <div class="grid md:grid-cols-3 gap-6">
-          <!-- SEO -->
-          <div class="card p-8">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
+
+          <div class="card p-8 fade-up d1">
+            <span class="step-num">01</span>
+            <div class="icon-box my-4" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/>
+                <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Audyt i strategia</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Analizujemy widoczność organiczną, kampanie PPC, analitykę
+              i konkurencję. Na wyjściu: lista priorytetów z szacowanym
+              wpływem na przychód.
+            </p>
+          </div>
+
+          <div class="card p-8 fade-up d2">
+            <span class="step-num">02</span>
+            <div class="icon-box my-4" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
               </svg>
             </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">SEO zorientowane na sprzedaż</h3>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Wdrożenie i optymalizacja</h3>
             <p class="text-muted text-sm leading-relaxed">
-              Sprawdzamy frazy z intencją zakupową, strukturę treści i architekturę serwisu.
-              Zależy nam na leadach i przychodzie — nie na samym ruchu organicznym.
+              Realizujemy plan: optymalizacje techniczne, content, struktura
+              kampanii, bidding, rozbudowa słów kluczowych. Ciągłe testy,
+              żaden budżet nie jest marnowany.
             </p>
           </div>
 
-          <!-- Technical -->
-          <div class="card p-8">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
+          <div class="card p-8 fade-up d3">
+            <span class="step-num">03</span>
+            <div class="icon-box my-4" aria-hidden="true">
               <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                    stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/>
-                <line x1="12" y1="17" x2="12" y2="21"/>
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
               </svg>
             </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Techniczny performance</h3>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Raportowanie i skalowanie</h3>
             <p class="text-muted text-sm leading-relaxed">
-              Core Web Vitals, szybkość ładowania, UX i błędy indeksacji — analizujemy
-              to, co Google widzi i co wpływa na konwersję użytkowników.
+              Dwa raporty miesięcznie: działań i wyników. Widzisz dokładnie,
+              co zrobiliśmy i jaki to miało efekt. Na bazie danych decydujemy,
+              co skalujemy.
             </p>
           </div>
 
-          <!-- Competitor -->
-          <div class="card p-8">
-            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
-                 aria-hidden="true">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
-                <line x1="6" y1="20" x2="6" y2="14"/>
-              </svg>
-            </div>
-            <h3 class="font-heading font-semibold text-lg text-text mb-3">Analiza konkurencji</h3>
-            <p class="text-muted text-sm leading-relaxed">
-              Pokazujemy konkretną lukę, którą Twoja konkurencja już wykorzystuje.
-              Dane, nie opinie — widoczność, linki, treści, słowa kluczowe.
-            </p>
-          </div>
         </div>
       </div>
     </section>
 
-    <!-- CREDIBILITY STATS -->
-    <section class="py-24 px-6">
+    <div class="section-divider"></div>
+
+    <!-- ═══════════════════════════════════════════════════════ STATS -->
+    <section id="wyniki" class="py-28 px-6">
       <div class="max-w-5xl mx-auto">
+
         <div class="text-center mb-16">
-          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
-            Dane, które mówią same za siebie
+          <span class="eyebrow fade-up">Liczby</span>
+          <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mt-6 mb-5 fade-up d1">
+            Dane zamiast obietnic
           </h2>
-          <p class="text-muted text-lg max-w-xl mx-auto">
-            Nie składamy obietnic. Opieramy się na uporządkowanym procesie i twardej analityce.
+          <p class="text-muted text-lg max-w-lg mx-auto fade-up d2">
+            Nie sprzedajemy "efektów w 3 miesiące". Budujemy systemy
+            pozyskiwania ruchu, które działają latami.
           </p>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <div class="card p-8 text-center">
-            <div class="stat-number mb-2">87<span class="text-2xl">%</span></div>
+        <!-- Stats row -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
+
+          <div class="card p-8 text-center fade-up d1">
+            <div class="stat-num text-5xl mb-3">
+              <span class="counter" data-target="87">0</span><span class="text-3xl">%</span>
+            </div>
             <p class="text-muted text-sm leading-snug">klientów zostaje z nami dłużej niż 12 miesięcy</p>
           </div>
-          <div class="card p-8 text-center">
-            <div class="stat-number mb-2">5<span class="text-2xl">+</span></div>
+
+          <div class="card p-8 text-center fade-up d2">
+            <div class="stat-num text-5xl mb-3">
+              <span class="counter" data-target="5">0</span><span class="text-3xl">+</span>
+            </div>
             <p class="text-muted text-sm leading-snug">lat doświadczenia każdego specjalisty w projekcie</p>
           </div>
-          <div class="card p-8 text-center">
-            <div class="stat-number mb-2">2</div>
+
+          <div class="card p-8 text-center fade-up d3">
+            <div class="stat-num text-5xl mb-3">
+              <span class="counter" data-target="2">0</span>
+            </div>
             <p class="text-muted text-sm leading-snug">raporty miesięcznie: działań i wyników</p>
           </div>
-          <div class="card p-8 text-center">
-            <div class="stat-number mb-2">0</div>
+
+          <div class="card p-8 text-center fade-up d4">
+            <div class="stat-num text-5xl mb-3">
+              <span class="counter" data-target="0">0</span>
+            </div>
             <p class="text-muted text-sm leading-snug">juniorów zaangażowanych w prowadzenie projektów</p>
           </div>
+
+        </div>
+
+        <!-- Why us bullets -->
+        <div class="grid md:grid-cols-2 gap-4">
+
+          <div class="card p-5 flex items-start gap-4 fade-up d1">
+            <div class="icon-box" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-text text-sm mb-1">Tylko seniorzy</h4>
+              <p class="text-muted text-sm leading-relaxed">Żadnych juniorów uczących się na Twoim projekcie. Każdy specjalista ma minimum 5 lat doświadczenia w swojej dziedzinie.</p>
+            </div>
+          </div>
+
+          <div class="card p-5 flex items-start gap-4 fade-up d2">
+            <div class="icon-box" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="1" x2="12" y2="23"/>
+                <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-text text-sm mb-1">Wynagrodzenie powiązane z wynikami</h4>
+              <p class="text-muted text-sm leading-relaxed">Część naszego wynagrodzenia zależy od osiągniętych celów. Mamy realny powód, żeby Twoje kampanie działały.</p>
+            </div>
+          </div>
+
+          <div class="card p-5 flex items-start gap-4 fade-up d3">
+            <div class="icon-box" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                <circle cx="9" cy="7" r="4"/>
+                <path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-text text-sm mb-1">Dedykowany opiekun projektu</h4>
+              <p class="text-muted text-sm leading-relaxed">Jeden punkt kontaktu, który zna Twój biznes i Twoje cele. Bez "przekazywania do właściwego działu".</p>
+            </div>
+          </div>
+
+          <div class="card p-5 flex items-start gap-4 fade-up d4">
+            <div class="icon-box" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"/>
+                <polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <h4 class="font-heading font-semibold text-text text-sm mb-1">Transparentność bez zbędnych spotkań</h4>
+              <p class="text-muted text-sm leading-relaxed">Dwa raporty miesięcznie z pełnym wglądem w działania i wyniki. Masz kontrolę bez mikrozarządzania.</p>
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
 
-    <!-- FINAL CTA -->
-    <section class="py-24 px-6 bg-surface" id="cta">
-      <div class="max-w-3xl mx-auto text-center">
-        <div class="flex justify-center mb-6">
-          <span class="eyebrow">Bezpłatna, 20-minutowa rozmowa</span>
-        </div>
+    <div class="section-divider"></div>
 
-        <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mb-6">
-          Gotowy zobaczyć,<br />
-          <span class="text-accent">co traciłeś?</span>
+    <!-- ═══════════════════════════════════════════════════════ CTA -->
+    <section class="relative py-28 px-6 overflow-hidden" id="konsultacja">
+      <div class="glow-blob blob-a w-[500px] h-[500px] bg-[#3B82F6]" style="top:-8rem;right:-8rem;opacity:.11;"></div>
+      <div class="glow-blob blob-b w-[400px] h-[400px] bg-[#6366F1]" style="bottom:-6rem;left:-6rem;opacity:.1;"></div>
+
+      <div class="max-w-2xl mx-auto text-center relative z-10">
+
+        <span class="eyebrow fade-up">Bezpłatna konsultacja · 30 minut</span>
+
+        <h2 class="font-heading font-bold text-4xl md:text-6xl text-text mt-8 mb-6 leading-tight fade-up d1">
+          Sprawdź, czy<br />
+          <span class="gradient-text">możemy Ci pomóc.</span>
         </h2>
 
-        <p class="text-muted text-lg mb-10 max-w-xl mx-auto leading-relaxed">
-          Umów rozmowę. Pokażemy wyniki analizy Twojej strony i konkretny plan naprawczy
-          — bez ogólników, bez marnowania czasu.
+        <p class="text-muted text-lg mb-10 max-w-lg mx-auto leading-relaxed fade-up d2">
+          30-minutowa rozmowa bez zobowiązań. Opowiemy, co widzimy
+          w Twojej branży i co realistycznie możemy zrobić dla Twojego
+          biznesu — z danymi w ręku.
         </p>
 
-        <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
-           class="btn-primary text-base inline-flex">
-          Zarezerwuj termin
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
-               aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </a>
+        <div class="fade-up d3">
+          <button onclick="openCalendly()" class="btn-primary text-lg px-8 py-4">
+            Zarezerwuj termin
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="4" width="18" height="18" rx="2"/>
+              <line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>
+            </svg>
+          </button>
+        </div>
 
-        <p class="text-muted text-sm mt-6">
-          Otrzymałeś e-mail z nagraniem wideo? <span class="text-text">Odpisz bezpośrednio na naszą wiadomość.</span>
+        <p class="text-muted text-sm mt-6 fade-up d4">
+          Wolisz mailowo? Napisz na
+          <a href="mailto:[EMAIL]" class="text-accent-light hover:underline">[EMAIL]</a>
         </p>
+
       </div>
     </section>
 
   </main>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-border py-8 px-6">
+  <!-- ═══════════════════════════════════════════════════════ FOOTER -->
+  <footer class="border-t border-[rgba(255,255,255,0.07)] py-8 px-6">
     <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
       <p class="text-muted text-sm">&copy; 2026 [DOMAIN]. Wszelkie prawa zastrzeżone.</p>
       <nav class="flex items-center gap-6" aria-label="Stopka">
@@ -406,6 +641,81 @@
       </nav>
     </div>
   </footer>
+
+  <!-- Calendly widget JS -->
+  <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+
+  <script>
+    /* ── Calendly popup ──────────────────────────────────────────── */
+    function openCalendly() {
+      const url = 'https://calendly.com/PLACEHOLDER';
+      if (typeof Calendly !== 'undefined') {
+        Calendly.initPopupWidget({ url });
+      } else {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+      return false;
+    }
+
+    /* ── Mobile hamburger ────────────────────────────────────────── */
+    const hamburger   = document.getElementById('hamburger');
+    const mobileMenu  = document.getElementById('mobile-menu');
+    hamburger.addEventListener('click', () => {
+      const open = mobileMenu.classList.toggle('open');
+      hamburger.setAttribute('aria-expanded', open);
+    });
+    mobileMenu.querySelectorAll('a').forEach(link =>
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('open');
+        hamburger.setAttribute('aria-expanded', 'false');
+      })
+    );
+
+    /* ── Scroll-triggered fade-in (Intersection Observer) ────────── */
+    const fadeIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add('visible');
+        fadeIO.unobserve(entry.target);
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+    document.querySelectorAll('.fade-up').forEach(el => {
+      const heroEl = el.id && el.id.startsWith('hero-');
+      if (heroEl) {
+        // Hero: stagger on page load
+        const idx = parseInt(el.id.replace('hero-', ''), 10);
+        setTimeout(() => el.classList.add('visible'), 120 + idx * 120);
+      } else {
+        fadeIO.observe(el);
+      }
+    });
+
+    /* ── Counter animation ───────────────────────────────────────── */
+    const counterIO = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el     = entry.target;
+        const target = parseInt(el.dataset.target, 10);
+        counterIO.unobserve(el);
+
+        if (target === 0) return; // stays at 0
+
+        const duration = 1400;
+        const steps    = 55;
+        let   step     = 0;
+        const easeOut  = t => 1 - Math.pow(1 - t, 3);
+
+        const timer = setInterval(() => {
+          step++;
+          el.textContent = Math.round(easeOut(step / steps) * target);
+          if (step >= steps) { el.textContent = target; clearInterval(timer); }
+        }, duration / steps);
+      });
+    }, { threshold: 0.6 });
+
+    document.querySelectorAll('.counter').forEach(el => counterIO.observe(el));
+  </script>
 
 </body>
 </html>
