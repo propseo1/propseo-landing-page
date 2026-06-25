@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>[DOMAIN] — Analiza strony i audyt wideo</title>
+  <meta name="description" content="Wysyłamy spersonalizowane nagrania wideo z analizą Twojej strony. Twarda analityka, zero szablonów." />
+  <meta name="robots" content="noindex, nofollow" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bg:       '#080E1C',
+            surface:  '#0F172A',
+            accent:   '#3B82F6',
+            'accent-hover': '#2563EB',
+            text:     '#F1F5F9',
+            muted:    '#64748B',
+            border:   'rgba(255,255,255,0.07)',
+          },
+          fontFamily: {
+            heading: ['Space Grotesk', 'sans-serif'],
+            body:    ['DM Sans', 'sans-serif'],
+          },
+        },
+      },
+    }
+  </script>
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body { background-color: #080E1C; color: #F1F5F9; font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+    /* Dot grid background */
+    .dot-grid {
+      background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+
+    /* Ambient glow blobs */
+    .glow-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(120px);
+      opacity: 0.18;
+      pointer-events: none;
+    }
+
+    /* Glassmorphism navbar */
+    .glass-nav {
+      background: rgba(8, 14, 28, 0.8);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    /* Card style */
+    .card {
+      background: #0F172A;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 12px;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+    .card:hover {
+      border-color: rgba(59,130,246,0.3);
+      transform: translateY(-2px);
+    }
+
+    /* Stat number */
+    .stat-number {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 3rem;
+      font-weight: 700;
+      line-height: 1;
+      color: #3B82F6;
+    }
+
+    /* CTA button */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: #3B82F6;
+      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      font-weight: 600;
+      padding: 0.875rem 1.75rem;
+      border-radius: 8px;
+      transition: background 0.2s, transform 0.15s;
+      cursor: pointer;
+      text-decoration: none;
+      border: none;
+    }
+    .btn-primary:hover {
+      background: #2563EB;
+      transform: translateY(-1px);
+    }
+    .btn-primary:active { transform: translateY(0); }
+
+    /* Eyebrow tag */
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: #3B82F6;
+      background: rgba(59,130,246,0.1);
+      border: 1px solid rgba(59,130,246,0.2);
+      border-radius: 999px;
+      padding: 0.3rem 0.9rem;
+    }
+
+    /* Step connector */
+    .step-connector {
+      width: 1px;
+      height: 2rem;
+      background: linear-gradient(to bottom, rgba(59,130,246,0.4), transparent);
+      margin: 0.5rem auto;
+    }
+
+    /* Reduce motion */
+    @media (prefers-reduced-motion: reduce) {
+      .card { transition: none; }
+      .btn-primary { transition: none; }
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body class="antialiased">
+
+  <!-- NAVBAR -->
+  <header class="glass-nav fixed top-0 left-0 right-0 z-50">
+    <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+      <span class="font-heading font-semibold text-text text-lg tracking-tight">[DOMAIN]</span>
+      <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
+         class="btn-primary text-sm py-2 px-5">
+        Umów rozmowę
+        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+             aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO SECTION -->
+    <section class="dot-grid relative min-h-screen flex items-center pt-24 pb-20 overflow-hidden">
+      <!-- Glow blobs -->
+      <div class="glow-blob w-96 h-96 bg-accent" style="top: -4rem; left: -6rem;"></div>
+      <div class="glow-blob w-80 h-80 bg-blue-400" style="bottom: 0; right: -4rem;"></div>
+
+      <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+        <div class="flex justify-center mb-6">
+          <span class="eyebrow">Analiza strony &middot; Audyt wideo &middot; Rekomendacje</span>
+        </div>
+
+        <h1 class="font-heading font-bold text-4xl md:text-6xl text-text leading-tight mb-6">
+          Twoja strona traci&nbsp;klientów.<br />
+          <span class="text-accent">Pokazujemy dokładnie&nbsp;jak.</span>
+        </h1>
+
+        <p class="text-muted text-lg md:text-xl max-w-2xl mx-auto mb-10 leading-relaxed">
+          Wysyłamy spersonalizowane nagrania wideo z analizą konkretnej strony&nbsp;—
+          bez szablonów, bez ogólników. Tylko twarda analityka i plan naprawczy.
+        </p>
+
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+          <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
+             class="btn-primary text-base">
+            Umów bezpłatną rozmowę
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                 stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                 aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+
+        <p class="text-muted text-sm">
+          Czekasz na swoje wideo? <span class="text-text">Odpisz na naszą wiadomość e-mail.</span>
+        </p>
+      </div>
+    </section>
+
+    <!-- WHY DID YOU GET AN EMAIL -->
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
+            Dlaczego dostałeś od nas wiadomość?
+          </h2>
+          <p class="text-muted text-lg max-w-xl mx-auto">
+            Nie działamy masowo. Każda wiadomość to efekt konkretnej analizy konkretnej strony.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- Step 1 -->
+          <div class="card p-8 flex flex-col">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Skanujemy rynek</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Identyfikujemy strony z wysokim potencjałem biznesowym i krytycznymi lukami,
+              które realnie ograniczają sprzedaż i pozyskiwanie leadów.
+            </p>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="card p-8 flex flex-col">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2" ry="2"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Nagrywamy wideo</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Przygotowujemy indywidualne nagranie z analizą Twojej strony — pokazujemy dokładnie,
+              gdzie i dlaczego tracisz klientów, wraz z analizą konkurencji.
+            </p>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="card p-8 flex flex-col">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.5 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.44 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.4a16 16 0 0 0 5.69 5.69l.8-.79a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21 16.92z"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Proponujemy rozmowę</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Tylko jeśli widzimy realną wartość dla Twojego biznesu. Bez nachalnej sprzedaży —
+              rozmowa to omówienie wyników analizy i konkretnych kroków naprawczych.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CORE EXPERTISE -->
+    <section class="py-24 px-6 bg-surface">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
+            Co analizujemy podczas audytu
+          </h2>
+          <p class="text-muted text-lg max-w-xl mx-auto">
+            Każde nagranie obejmuje trzy obszary, które mają bezpośredni wpływ na wyniki biznesowe.
+          </p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-6">
+          <!-- SEO -->
+          <div class="card p-8">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">SEO zorientowane na sprzedaż</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Sprawdzamy frazy z intencją zakupową, strukturę treści i architekturę serwisu.
+              Zależy nam na leadach i przychodzie — nie na samym ruchu organicznym.
+            </p>
+          </div>
+
+          <!-- Technical -->
+          <div class="card p-8">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/>
+                <line x1="12" y1="17" x2="12" y2="21"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Techniczny performance</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Core Web Vitals, szybkość ładowania, UX i błędy indeksacji — analizujemy
+              to, co Google widzi i co wpływa na konwersję użytkowników.
+            </p>
+          </div>
+
+          <!-- Competitor -->
+          <div class="card p-8">
+            <div class="w-10 h-10 rounded-lg bg-accent bg-opacity-15 flex items-center justify-center mb-5"
+                 aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                   stroke="#3B82F6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/>
+                <line x1="6" y1="20" x2="6" y2="14"/>
+              </svg>
+            </div>
+            <h3 class="font-heading font-semibold text-lg text-text mb-3">Analiza konkurencji</h3>
+            <p class="text-muted text-sm leading-relaxed">
+              Pokazujemy konkretną lukę, którą Twoja konkurencja już wykorzystuje.
+              Dane, nie opinie — widoczność, linki, treści, słowa kluczowe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CREDIBILITY STATS -->
+    <section class="py-24 px-6">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-16">
+          <h2 class="font-heading font-bold text-3xl md:text-4xl text-text mb-4">
+            Dane, które mówią same za siebie
+          </h2>
+          <p class="text-muted text-lg max-w-xl mx-auto">
+            Nie składamy obietnic. Opieramy się na uporządkowanym procesie i twardej analityce.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+          <div class="card p-8 text-center">
+            <div class="stat-number mb-2">87<span class="text-2xl">%</span></div>
+            <p class="text-muted text-sm leading-snug">klientów zostaje z nami dłużej niż 12 miesięcy</p>
+          </div>
+          <div class="card p-8 text-center">
+            <div class="stat-number mb-2">5<span class="text-2xl">+</span></div>
+            <p class="text-muted text-sm leading-snug">lat doświadczenia każdego specjalisty w projekcie</p>
+          </div>
+          <div class="card p-8 text-center">
+            <div class="stat-number mb-2">2</div>
+            <p class="text-muted text-sm leading-snug">raporty miesięcznie: działań i wyników</p>
+          </div>
+          <div class="card p-8 text-center">
+            <div class="stat-number mb-2">0</div>
+            <p class="text-muted text-sm leading-snug">juniorów zaangażowanych w prowadzenie projektów</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FINAL CTA -->
+    <section class="py-24 px-6 bg-surface" id="cta">
+      <div class="max-w-3xl mx-auto text-center">
+        <div class="flex justify-center mb-6">
+          <span class="eyebrow">Bezpłatna, 20-minutowa rozmowa</span>
+        </div>
+
+        <h2 class="font-heading font-bold text-3xl md:text-5xl text-text mb-6">
+          Gotowy zobaczyć,<br />
+          <span class="text-accent">co traciłeś?</span>
+        </h2>
+
+        <p class="text-muted text-lg mb-10 max-w-xl mx-auto leading-relaxed">
+          Umów rozmowę. Pokażemy wyniki analizy Twojej strony i konkretny plan naprawczy
+          — bez ogólników, bez marnowania czasu.
+        </p>
+
+        <a href="https://calendly.com/PLACEHOLDER" target="_blank" rel="noopener noreferrer"
+           class="btn-primary text-base inline-flex">
+          Zarezerwuj termin
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+               aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </a>
+
+        <p class="text-muted text-sm mt-6">
+          Otrzymałeś e-mail z nagraniem wideo? <span class="text-text">Odpisz bezpośrednio na naszą wiadomość.</span>
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-border py-8 px-6">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+      <p class="text-muted text-sm">&copy; 2026 [DOMAIN]. Wszelkie prawa zastrzeżone.</p>
+      <nav class="flex items-center gap-6" aria-label="Stopka">
+        <a href="[PRIVACY_URL]" class="text-muted text-sm hover:text-text transition-colors">Polityka prywatności</a>
+        <a href="mailto:[EMAIL]" class="text-muted text-sm hover:text-text transition-colors">Kontakt</a>
+      </nav>
+    </div>
+  </footer>
+
+</body>
+</html>
