@@ -12,9 +12,6 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet" />
 
-  <!-- Calendly CSS -->
-  <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet" />
-
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <script>
@@ -466,6 +463,78 @@
       .marquee-inner, .gradient-text, .bold-strip em { animation: none; }
       html { scroll-behavior: auto; }
     }
+
+    /* ══════════════════════════════════════════════════════════
+       LEAD FORM INPUTS
+    ══════════════════════════════════════════════════════════ */
+    .form-input {
+      width: 100%; padding: .65rem .9rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--text);
+      font-family: 'DM Sans', sans-serif; font-size: .9rem;
+      transition: border-color .2s, box-shadow .2s;
+      box-sizing: border-box; -webkit-appearance: none; appearance: none;
+    }
+    .form-input:focus {
+      outline: none; border-color: var(--accent-bdr);
+      box-shadow: 0 0 0 3px var(--accent-bg);
+    }
+    .form-input::placeholder { color: var(--muted); opacity: 1; }
+    select.form-input { cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2364748B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right .85rem center; padding-right: 2.25rem; }
+    .form-label { display: block; font-size: .75rem; font-weight: 600; color: var(--muted); margin-bottom: .4rem; letter-spacing: .05em; text-transform: uppercase; }
+
+    /* ══════════════════════════════════════════════════════════
+       LEAD MODAL
+    ══════════════════════════════════════════════════════════ */
+    #lead-modal {
+      display: none; position: fixed; inset: 0; z-index: 1000; overflow-y: auto;
+      background: rgba(8,14,28,0.82);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    .modal-inner {
+      min-height: 100%; display: flex;
+      align-items: center; justify-content: center; padding: 1.5rem;
+    }
+    .modal-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 16px; width: 100%; max-width: 560px;
+      position: relative; padding: 2.5rem;
+      box-shadow: 0 24px 80px rgba(0,0,0,.35);
+      animation: modal-in .22s cubic-bezier(.23,1,.32,1);
+    }
+    @keyframes modal-in {
+      from { opacity: 0; transform: translateY(20px) scale(.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .modal-close {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--toggle-bg); border: 1px solid var(--border);
+      border-radius: 8px; width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--muted); font-size: 1rem; line-height: 1;
+      transition: background .2s, border-color .2s;
+    }
+    .modal-close:hover { background: var(--accent-bg); border-color: var(--accent-bdr); color: var(--text); }
+
+    /* ══════════════════════════════════════════════════════════
+       HERO DOMAIN INPUT
+    ══════════════════════════════════════════════════════════ */
+    .hero-input-wrap {
+      display: flex; align-items: center;
+      background: var(--surface); border: 1.5px solid var(--border);
+      border-radius: 999px; padding: .3rem .3rem .3rem 1.25rem;
+      transition: border-color .2s, box-shadow .2s; max-width: 560px;
+    }
+    .hero-input-wrap:focus-within {
+      border-color: var(--accent-bdr);
+      box-shadow: 0 0 0 3px var(--accent-bg);
+    }
+    .hero-input-wrap input {
+      flex: 1; background: transparent; border: none; outline: none;
+      color: var(--text); font-family: 'DM Sans', sans-serif; font-size: .95rem;
+      min-width: 0; padding-right: .5rem;
+    }
+    .hero-input-wrap input::placeholder { color: var(--muted); }
   </style>
 </head>
 
@@ -505,7 +574,7 @@
         </svg>
       </button>
 
-      <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-4 hidden md:inline-flex">
+      <button onclick="openLeadModal()" class="btn-primary text-sm py-2.5 px-4 hidden md:inline-flex">
         Umów konsultację
         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -531,7 +600,7 @@
     <a href="#lejek"  class="text-sm font-medium text-c-text">Lejek</a>
     <a href="#proces" class="text-sm font-medium text-c-text">Jak działamy</a>
     <a href="#wyniki" class="text-sm font-medium text-c-text">Wyniki</a>
-    <button onclick="openCalendly()" class="btn-primary text-sm py-2.5 px-4 justify-center">Umów konsultację</button>
+    <button onclick="openLeadModal()" class="btn-primary text-sm py-2.5 px-4 justify-center">Umów konsultację</button>
   </div>
 </header>
 
@@ -557,15 +626,18 @@
         który to dowiezie. Zaczynamy od diagnozy danych i konkurencji,
         nie od razu od wdrożenia.
       </p>
-      <div class="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-12 fade-up" id="h3">
-        <button onclick="openCalendly()" class="btn-primary text-base">
-          Umów bezpłatną konsultację
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
-               stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-            <path d="M5 12h14M12 5l7 7-7 7"/>
-          </svg>
-        </button>
-        <a href="#uslugi" class="btn-ghost text-base">Sprawdź usługi</a>
+      <div class="mb-12 fade-up" id="h3">
+        <div class="hero-input-wrap mb-3">
+          <input type="text" id="hero-domain" placeholder="np. twojafirma.pl"
+                 onkeydown="if(event.key==='Enter')openLeadModalFromHero()" />
+          <button onclick="openLeadModalFromHero()" class="btn-primary" style="font-size:.88rem;padding:.75rem 1.25rem;">
+            Chcę odebrać propozycję wideo&nbsp;&rarr;
+          </button>
+        </div>
+        <p style="font-size:.8rem;color:var(--muted);padding-left:.5rem;">
+          Wpisz domenę — nagramy spersonalizowane wideo z analizą Twojej strony.
+          <a href="#uslugi" style="color:var(--accent);margin-left:.5rem;">Sprawdź usługi →</a>
+        </p>
       </div>
       <!-- Trust pills -->
       <div class="flex flex-wrap gap-x-7 gap-y-2 fade-up" id="h4">
@@ -1019,7 +1091,7 @@
           Konfigurujemy pełny tracking konwersji — od pierwszego kliknięcia
           reklamy po finalizację zakupu. Wiesz, skąd pochodzi każdy lead.
         </p>
-        <button onclick="openCalendly()" class="btn-primary text-sm">
+        <button onclick="openLeadModal()" class="btn-primary text-sm">
           Porozmawiaj o analityce →
         </button>
       </div>
@@ -1116,7 +1188,7 @@
           z konkretnym podziałem na priorytety, etapy i oczekiwane rezultaty.
           Żadnych niespodzianek, żadnych "zobaczymy co wyjdzie".
         </p>
-        <button onclick="openCalendly()" class="btn-primary text-sm">
+        <button onclick="openLeadModal()" class="btn-primary text-sm">
           Umów bezpłatną rozmowę →
         </button>
       </div>
@@ -1241,7 +1313,7 @@
       i co realistycznie możemy zrobić dla Twojego biznesu — z danymi w ręku.
     </p>
     <div class="fade-up d3">
-      <button onclick="openCalendly()" class="btn-primary text-lg px-8 py-4">
+      <button onclick="openLeadModal()" class="btn-primary text-lg px-8 py-4">
         Zarezerwuj termin
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -1270,20 +1342,53 @@
   </div>
 </footer>
 
-<!-- Calendly JS -->
-<script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
 
 <script>
-  /* ── Calendly popup (nie redirect!) ────────────────────── */
-  function openCalendly() {
-    const url = 'https://calendly.com/PLACEHOLDER';
-    if (typeof Calendly !== 'undefined') {
-      Calendly.initPopupWidget({ url });
-    } else {
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
-    return false;
+  /* ── Lead modal ─────────────────────────────────────────── */
+  function openLeadModal(prefill) {
+    const modal = document.getElementById('lead-modal');
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+    if (prefill) document.getElementById('modal-website').value = prefill;
+    setTimeout(() => {
+      const first = modal.querySelector('input:not([type=hidden])');
+      if (first) first.focus();
+    }, 120);
   }
+  function closeLeadModal() {
+    document.getElementById('lead-modal').style.display = 'none';
+    document.body.style.overflow = '';
+  }
+  function openLeadModalFromHero() {
+    const domain = (document.getElementById('hero-domain').value || '').trim();
+    openLeadModal(domain || undefined);
+  }
+  document.getElementById('lead-modal').addEventListener('click', function(e) {
+    if (e.target === this) closeLeadModal();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape' && document.getElementById('lead-modal').style.display === 'block') closeLeadModal();
+  });
+  document.getElementById('lead-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('[type=submit]');
+    const origHTML = btn.innerHTML;
+    btn.innerHTML = 'Wysyłanie…'; btn.disabled = true;
+    try {
+      const res = await fetch(this.action, {
+        method: 'POST', body: new FormData(this),
+        headers: { Accept: 'application/json' }
+      });
+      if (res.ok) {
+        this.style.display = 'none';
+        document.getElementById('form-success').style.display = 'block';
+      } else { throw new Error('non-ok'); }
+    } catch {
+      btn.innerHTML = origHTML; btn.disabled = false;
+      btn.style.background = '#EF4444';
+      setTimeout(() => { btn.style.background = ''; }, 2200);
+    }
+  });
 
   /* ── Theme toggle ───────────────────────────────────────── */
   document.getElementById('themeToggle').addEventListener('click', () => {
@@ -1394,6 +1499,95 @@
   }
 
 </script>
+
+<!-- ═══════════════════════════════════════════════════════════ LEAD MODAL -->
+<div id="lead-modal" role="dialog" aria-modal="true" aria-label="Formularz — propozycja wideo SEO">
+  <div class="modal-inner">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeLeadModal()" aria-label="Zamknij">&times;</button>
+
+      <div style="margin-bottom:1.75rem;">
+        <span class="eyebrow" style="margin-bottom:1rem;display:inline-flex;">Bezpłatna propozycja wideo</span>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.45rem;
+                   color:var(--text);line-height:1.2;margin:.75rem 0 .5rem;">
+          Zostaw dane — odeślemy wideo<br />z analizą Twojej strony.
+        </h3>
+        <p style="font-size:.88rem;color:var(--muted);">Odpowiadamy w ciągu 24h roboczych. Zero spamu.</p>
+      </div>
+
+      <form id="lead-form" action="https://formspree.io/f/FORMSPREE_ID" method="POST">
+        <input type="hidden" name="_subject" value="Nowe zapytanie — propozycja wideo SEO" />
+        <input type="hidden" name="_gotcha" style="display:none" />
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <label class="form-label">Imię i nazwisko *</label>
+            <input type="text" name="name" required placeholder="Jan Kowalski" class="form-input" />
+          </div>
+          <div>
+            <label class="form-label">Email służbowy *</label>
+            <input type="email" name="email" required placeholder="jan@firma.pl" class="form-input" />
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <label class="form-label">Domena / strona *</label>
+            <input type="text" name="website" id="modal-website" required placeholder="twojafirma.pl" class="form-input" />
+          </div>
+          <div>
+            <label class="form-label">Firma *</label>
+            <input type="text" name="company" required placeholder="Nazwa firmy" class="form-input" />
+          </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;">
+          <div>
+            <label class="form-label">Telefon *</label>
+            <input type="tel" name="phone" required placeholder="+48 000 000 000" class="form-input" />
+          </div>
+          <div>
+            <label class="form-label">Budżet miesięczny *</label>
+            <select name="budget" required class="form-input">
+              <option value="" disabled selected>Wybierz zakres</option>
+              <option value="do 2000 zl">do 2 000 zł</option>
+              <option value="2000-5000 zl">2 000 – 5 000 zł</option>
+              <option value="5000-10000 zl">5 000 – 10 000 zł</option>
+              <option value="powyzej 10000 zl">powyżej 10 000 zł</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="margin-bottom:1.5rem;">
+          <label class="form-label">Komentarz / pytania</label>
+          <textarea name="message" rows="3"
+                    placeholder="Co chcesz osiągnąć? Jakie masz cele?"
+                    class="form-input" style="resize:vertical;"></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center;font-size:.95rem;padding:1rem 1.5rem;">
+          Wyślij — chcę odebrać wideo z analizą &rarr;
+        </button>
+        <p style="font-size:.74rem;color:var(--muted);text-align:center;margin-top:.75rem;">
+          Twoje dane są bezpieczne. Żadnego spamu — tylko Twoje spersonalizowane wideo.
+        </p>
+      </form>
+
+      <div id="form-success" style="display:none;text-align:center;padding:2rem 0;">
+        <div style="width:64px;height:64px;border-radius:50%;background:rgba(34,197,94,.12);
+                    border:1px solid rgba(34,197,94,.22);display:flex;align-items:center;
+                    justify-content:center;margin:0 auto 1.25rem;font-size:1.75rem;">✅</div>
+        <h3 style="font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:1.4rem;color:var(--text);margin-bottom:.6rem;">
+          Gotowe!
+        </h3>
+        <p style="color:var(--muted);line-height:1.7;max-width:320px;margin:0 auto;">
+          Odezwiemy się w ciągu 24h z Twoim<br />spersonalizowanym wideo z analizą strony.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 </body>
 </html>
