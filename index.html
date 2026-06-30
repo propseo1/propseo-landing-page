@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>[DOMAIN] — Agencja SEO i Google Ads</title>
+  <title>Digital Growth — Agencja SEO i Google Ads</title>
   <meta name="description" content="Agencja SEO i Google Ads. Zamieniamy ruch organiczny i płatny w klientów — mierzalnie, bez przepalania budżetu." />
   <meta name="robots" content="noindex, nofollow" />
 
@@ -525,6 +525,15 @@
       border-radius: 999px; padding: .3rem .3rem .3rem 1.25rem;
       transition: border-color .2s, box-shadow .2s; max-width: 560px;
     }
+    @media (max-width: 480px) {
+      .hero-input-wrap {
+        flex-direction: column; align-items: stretch;
+        border-radius: 16px; padding: .75rem 1rem;
+        gap: .6rem;
+      }
+      .hero-input-wrap input { padding-right: 0; font-size: .95rem; }
+      .hero-input-wrap .btn-primary { width: 100%; text-align: center; border-radius: 10px; }
+    }
     .hero-input-wrap:focus-within {
       border-color: var(--accent-bdr);
       box-shadow: 0 0 0 3px var(--accent-bg);
@@ -546,11 +555,10 @@
 <header class="glass-nav fixed top-0 left-0 right-0 z-50">
   <div class="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
 
-    <a href="#" class="font-heading font-bold text-xl tracking-tight text-c-text">[DOMAIN]</a>
+    <a href="#" class="font-heading font-bold text-xl tracking-tight text-c-text">Digital Growth</a>
 
     <nav class="hidden md:flex items-center gap-8" aria-label="Nawigacja">
       <a href="#uslugi" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Usługi</a>
-      <a href="#lejek"  class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Lejek</a>
       <a href="#proces" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Jak działamy</a>
       <a href="#wyniki" class="text-sm font-medium text-c-muted hover:text-c-text transition-colors">Wyniki</a>
     </nav>
@@ -597,7 +605,6 @@
   <div id="mobile-menu" class="flex-col border-t px-6 py-5 gap-5 md:hidden"
        style="border-color:var(--border);background:var(--nav-bg)">
     <a href="#uslugi" class="text-sm font-medium text-c-text">Usługi</a>
-    <a href="#lejek"  class="text-sm font-medium text-c-text">Lejek</a>
     <a href="#proces" class="text-sm font-medium text-c-text">Jak działamy</a>
     <a href="#wyniki" class="text-sm font-medium text-c-text">Wyniki</a>
     <button onclick="openLeadModal()" class="btn-primary text-sm py-2.5 px-4 justify-center">Umów konsultację</button>
@@ -616,22 +623,20 @@
     <!-- Left: copy -->
     <div>
       <div class="mb-6 fade-up" id="h0">
-        <span class="eyebrow">Agencja SEO &amp; Google Ads</span>
+        <span class="eyebrow">Twój partner w biznesie</span>
       </div>
       <h1 class="font-heading font-bold text-5xl md:text-6xl xl:text-7xl leading-[1.04] mb-6 text-c-text fade-up" id="h1">
         Więcej klientów,<br />lepszy ROAS,<br /><span class="gradient-text">wyższa widoczność.</span>
       </h1>
       <p class="text-lg md:text-xl max-w-lg mb-10 leading-relaxed text-c-muted fade-up" id="h2">
-        Powiedz nam, co chcesz osiągnąć — a my zbudujemy plan SEO i Ads,
-        który to dowiezie. Zaczynamy od diagnozy danych i konkurencji,
-        nie od razu od wdrożenia.
+        Powiedz nam, co chcesz osiągnąć, a my przygotujemy strategię, która to dowiezie.
       </p>
       <div class="mb-12 fade-up" id="h3">
         <div class="hero-input-wrap mb-3">
           <input type="text" id="hero-domain" placeholder="np. twojafirma.pl"
                  onkeydown="if(event.key==='Enter')openLeadModalFromHero()" />
           <button onclick="openLeadModalFromHero()" class="btn-primary" style="font-size:.88rem;padding:.75rem 1.25rem;">
-            Chcę odebrać propozycję wideo&nbsp;&rarr;
+            Chcę odebrać audyt wideo&nbsp;&rarr;
           </button>
         </div>
         <p style="font-size:.8rem;color:var(--muted);padding-left:.5rem;">
@@ -647,7 +652,7 @@
         </div>
         <div class="flex items-center gap-2">
           <span style="width:8px;height:8px;border-radius:50%;background:var(--accent);display:block;"></span>
-          <span class="text-sm text-c-muted">Raport co miesiąc</span>
+          <span class="text-sm text-c-muted">Plan działań na 12 miesięcy</span>
         </div>
         <div class="flex items-center gap-2">
           <span style="width:8px;height:8px;border-radius:50%;background:#818CF8;display:block;"></span>
@@ -701,7 +706,7 @@
 
           <!-- Metric card 3: CPA -->
           <rect x="316" y="54" width="152" height="68" rx="8" class="db-inner" style="stroke:none"/>
-          <text x="326" y="70" class="db-muted" font-size="9">KOSZT NA LEAD</text>
+          <text x="326" y="70" class="db-muted" font-size="9">KOSZT ZA LEAD</text>
           <text x="326" y="96" class="db-accent" font-size="22" font-weight="700">48 zł</text>
           <text x="326" y="113" class="db-green" font-size="9">▼ -22% vs cel</text>
 
@@ -778,20 +783,20 @@
 <div class="proof-bar py-10 px-6">
   <div class="max-w-4xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
     <div>
-      <div class="proof-num">9,1<span style="font-size:1.3rem">/10</span></div>
-      <p class="text-xs text-c-muted mt-1">ocena agencji przez aktywnych klientów</p>
+      <div class="proof-num"><span class="counter" data-target="16">0</span><span style="font-size:1.3rem">+</span></div>
+      <p class="text-xs text-c-muted mt-1">średnia długość współprac (w miesiącach)</p>
     </div>
     <div>
-      <div class="proof-num"><span class="counter" data-target="87">0</span>%</div>
-      <p class="text-xs text-c-muted mt-1">klientów zostaje z nami dłużej niż rok</p>
+      <div class="proof-num"><span class="counter" data-target="225">0</span><span style="font-size:1.3rem">+</span></div>
+      <p class="text-xs text-c-muted mt-1">obsłużonych klientów</p>
     </div>
     <div>
-      <div class="proof-num"><span class="counter" data-target="415">0</span><span style="font-size:1.4rem">+</span></div>
-      <p class="text-xs text-c-muted mt-1">opracowanych strategii SEO i Ads</p>
+      <div class="proof-num">2<span style="font-size:1.4rem">×</span></div>
+      <p class="text-xs text-c-muted mt-1">średni wzrost ruchu organicznego w 12 mies.</p>
     </div>
     <div>
-      <div class="proof-num"><span class="counter" data-target="45">0</span><span style="font-size:1.4rem">+</span></div>
-      <p class="text-xs text-c-muted mt-1">obsłużonych branż i modeli biznesowych</p>
+      <div class="proof-num">0</div>
+      <p class="text-xs text-c-muted mt-1">projektów prowadzonych przez juniorów</p>
     </div>
   </div>
 </div>
@@ -810,13 +815,12 @@
 <section id="lejek" class="py-28 px-6 section-surface2">
   <div class="max-w-6xl mx-auto">
     <div class="text-center mb-16">
-      <span class="eyebrow fade-up">Lejek przychodów</span>
+      <span class="eyebrow fade-up">Od kliknięcia do konwersji</span>
       <h2 class="font-heading font-bold text-3xl md:text-5xl text-c-text mt-6 mb-5 fade-up d1">
-        Jak budujemy<br />Twój lejek sprzedażowy
+        Jak budujemy<br />Twój lejek konwersji
       </h2>
       <p class="text-lg max-w-xl mx-auto text-c-muted fade-up d2">
-        Od pierwszego kliknięcia do sprzedaży — mierzymy, optymalizujemy
-        i skalujemy każdy etap razem.
+        Audytujemy i optymalizujemy każdy etap — od pierwszego kliknięcia do finalnej konwersji, niezależnie czy to B2B czy e-commerce.
       </p>
     </div>
 
@@ -850,8 +854,8 @@
 
           <!-- Layer 4: Sales -->
           <polygon data-stage="3" points="122,288 218,288 198,370 142,370" fill="#22C55E"/>
-          <text x="170" y="324" text-anchor="middle" class="fn-lbl">Sprzedaż</text>
-          <text x="170" y="342" text-anchor="middle" class="fn-sub">Attribution · ROI</text>
+          <text x="170" y="324" text-anchor="middle" class="fn-lbl">Konwersja</text>
+          <text x="170" y="342" text-anchor="middle" class="fn-sub">Sprzedaż · Lead · Zapis</text>
         </svg>
       </div>
 
@@ -883,18 +887,16 @@
             <h4 class="font-heading font-semibold text-sm text-c-text">Kwalifikowane leady</h4>
           </div>
           <p class="text-sm text-c-muted leading-relaxed">
-            Optymalizujemy landing pages, formularze i ścieżki konwersji.
-            Testy A/B na kopii i CTA — decyzje z danych, nie z intuicji.
+            Audytujemy landing pages, formularze i ścieżki konwersji. Wskazujemy gdzie tracisz klientów i wdrażamy zmiany oparte na danych, nie intuicji.
           </p>
         </div>
         <div class="funnel-stage-card" data-card="3">
           <div class="flex items-center gap-3 mb-2">
             <span class="stage-dot" style="background:#22C55E;"></span>
-            <h4 class="font-heading font-semibold text-sm text-c-text">Sprzedaż</h4>
+            <h4 class="font-heading font-semibold text-sm text-c-text">Konwersja</h4>
           </div>
           <p class="text-sm text-c-muted leading-relaxed">
-            Pełna analityka attribution — wiemy, który kanał i które słowo kluczowe
-            wygenerowało sprzedaż. Skalujemy to, co działa, przerywamy to, co nie.
+            Audytujemy ścieżkę konwersji end-to-end — czy to sprzedaż w sklepie, zapis leada czy podpisanie umowy B2B. Skalujemy to, co działa.
           </p>
         </div>
       </div>
@@ -998,7 +1000,7 @@
         Czym różnimy się<br />od&nbsp;reszty rynku?
       </h2>
       <p class="text-lg max-w-xl mx-auto text-c-muted fade-up d2">
-        Zanim podpiszesz umowę z agencją SEO lub Ads, sprawdź,
+        Zanim podpiszesz umowę z agencją, sprawdź,
         co tak naprawdę dostajesz — a czego nie.
       </p>
     </div>
@@ -1015,7 +1017,7 @@
           </thead>
           <tbody>
             <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Audyt techniczny i analityczny przed startem</td>
+              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Business kick-off w celu poznania potrzeb Twojego biznesu</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
@@ -1025,7 +1027,7 @@
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Raportowanie wyników biznesowych (ROAS, leady, przychód)</td>
+              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Raport nie tylko wyników, ale też wykonanej pracy</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
@@ -1034,18 +1036,14 @@
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
+
             <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">SEO i Google Ads w jednym zespole, jedna strategia</td>
+              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Nie zatrudniamy juniorów do prowadzenia projektów</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
             <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Brak juniorów w projektach klientów</td>
-              <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
-              <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
-            </tr>
-            <tr style="border-bottom:1px solid var(--border);">
-              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Pełny tracking GA4 + GTM skonfigurowany pod Twój biznes</td>
+              <td style="padding:.9rem 1.5rem;font-size:.88rem;color:var(--text);">Analityka skonfigurowana pod Twoje cele biznesowe</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#EF4444;">✕</td>
               <td style="text-align:center;padding:.9rem;font-size:1rem;color:#22C55E;background:var(--accent-bg);">✓</td>
             </tr>
@@ -1089,7 +1087,7 @@
         </p>
         <p class="text-base leading-relaxed mb-8" style="color:rgba(241,245,249,0.7)">
           Konfigurujemy pełny tracking konwersji — od pierwszego kliknięcia
-          reklamy po finalizację zakupu. Wiesz, skąd pochodzi każdy lead.
+          reklamy po finalizację zakupu. Wiesz, skąd pochodzi każdy lead lub sprzedaż.
         </p>
         <button onclick="openLeadModal()" class="btn-primary text-sm">
           Porozmawiaj o analityce →
@@ -1184,8 +1182,8 @@
           Wiesz, co robimy<br />przez cały rok.
         </p>
         <p class="text-base leading-relaxed mb-8" style="color:rgba(241,245,249,0.72)">
-          Na starcie każdego projektu dostajesz klarowny roadmap na 12 miesięcy —
-          z konkretnym podziałem na priorytety, etapy i oczekiwane rezultaty.
+          Na starcie każdego projektu dostajesz klarowny plan na 12 miesięcy —
+          z konkretnym podziałem na priorytety i etapy działań.
           Żadnych niespodzianek, żadnych "zobaczymy co wyjdzie".
         </p>
         <button onclick="openLeadModal()" class="btn-primary text-sm">
@@ -1215,21 +1213,21 @@
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-5 mb-10">
       <div class="card p-8 text-center fade-up d1">
         <div class="stat-num text-5xl mb-3">
-          <span class="counter" data-target="87">0</span><span style="font-size:1.8rem">%</span>
+          <span class="counter" data-target="16">0</span><span style="font-size:1.8rem">+</span>
         </div>
-        <p class="text-sm leading-snug text-c-muted">klientów zostaje z nami dłużej niż 12 miesięcy</p>
+        <p class="text-sm leading-snug text-c-muted">średnia długość współprac (w miesiącach)</p>
       </div>
       <div class="card p-8 text-center fade-up d2">
         <div class="stat-num text-5xl mb-3">
-          <span class="counter" data-target="415">0</span><span style="font-size:1.8rem">+</span>
+          <span class="counter" data-target="225">0</span><span style="font-size:1.8rem">+</span>
         </div>
-        <p class="text-sm leading-snug text-c-muted">opracowanych strategii dla e-commerce i B2B</p>
+        <p class="text-sm leading-snug text-c-muted">obsłużonych klientów</p>
       </div>
       <div class="card p-8 text-center fade-up d3">
         <div class="stat-num text-5xl mb-3">
-          <span class="counter" data-target="45">0</span><span style="font-size:1.8rem">+</span>
+          2<span style="font-size:1.8rem">×</span>
         </div>
-        <p class="text-sm leading-snug text-c-muted">obsłużonych branż i modeli biznesowych</p>
+        <p class="text-sm leading-snug text-c-muted">średni wzrost ruchu organicznego w 12 mies.</p>
       </div>
       <div class="card p-8 text-center fade-up d4">
         <div class="stat-num text-5xl mb-3">
@@ -1304,17 +1302,16 @@
   <div class="glow-blob blob-b" style="bottom:-6rem;left:-6rem;width:400px;height:400px;background:var(--glow-b);opacity:1;"></div>
 
   <div class="max-w-2xl mx-auto text-center relative z-10">
-    <span class="eyebrow fade-up">Bezpłatna konsultacja · 30 minut</span>
+    <span class="eyebrow fade-up">Indywidualny audyt wideo · Bezpłatnie</span>
     <h2 class="font-heading font-bold text-4xl md:text-6xl text-c-text mt-8 mb-6 leading-tight fade-up d1">
-      Sprawdź, czy<br /><span class="gradient-text">możemy Ci pomóc.</span>
+      Zamów wideo<br /><span class="gradient-text">z analizą Twojej strony.</span>
     </h2>
     <p class="text-lg mb-10 max-w-lg mx-auto leading-relaxed text-c-muted fade-up d2">
-      30-minutowa rozmowa bez zobowiązań. Opowiemy, co widzimy w Twojej branży
-      i co realistycznie możemy zrobić dla Twojego biznesu — z danymi w ręku.
+      Nagrywamy spersonalizowane wideo z analizą konkretnie Twojej strony — bez AI, bez szablonów. Tylko realne spostrzeżenia i plan poprawy.
     </p>
     <div class="fade-up d3">
       <button onclick="openLeadModal()" class="btn-primary text-lg px-8 py-4">
-        Zarezerwuj termin
+        Zamów bezpłatne wideo z analizą
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
              stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="4" width="18" height="18" rx="2"/>
@@ -1334,7 +1331,7 @@
 <!-- ═══════════════════════════════════════════════════════════ FOOTER -->
 <footer style="border-top:1px solid var(--border)" class="py-8 px-6">
   <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
-    <p class="text-sm text-c-muted">&copy; 2026 [DOMAIN]. Wszelkie prawa zastrzeżone.</p>
+    <p class="text-sm text-c-muted">&copy; 2026 Digital Growth. Wszelkie prawa zastrzeżone.</p>
     <nav class="flex items-center gap-6" aria-label="Stopka">
       <a href="[PRIVACY_URL]" class="text-sm text-c-muted hover:text-c-text transition-colors">Polityka prywatności</a>
       <a href="mailto:[EMAIL]" class="text-sm text-c-muted hover:text-c-text transition-colors">Kontakt</a>
